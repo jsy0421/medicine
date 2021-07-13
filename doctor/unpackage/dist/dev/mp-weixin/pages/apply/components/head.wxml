@@ -1,0 +1,1 @@
+<view><u-icon vue-id="5fb420f7-1" name="arrow-left" color="#2979ff" size="28" bind:__l="__l"></u-icon><text>复诊配药详情</text><u-button vue-id="5fb420f7-2" ripple="{{true}}" bind:__l="__l" vue-slots="{{['default']}}">关闭</u-button></view>

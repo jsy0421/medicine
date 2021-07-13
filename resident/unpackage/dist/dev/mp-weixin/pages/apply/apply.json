@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "uView-center",
+  "usingComponents": {
+    "head": "/pages/apply/components/head"
+  }
+}
