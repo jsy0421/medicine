@@ -22,6 +22,10 @@
 	margin-right: auto;
 	margin-bottom: 50rpx;
 }
+.title {
+	font-size: 36rpx;
+	color: #8f8f94;
+}
 .text-area {
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -29,39 +33,18 @@
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
 	        justify-content: center;
+	margin-top: 10%;
+	width: 80%;
 }
-.title {
-	font-size: 36rpx;
-	color: #8f8f94;
+.page-login {
+	width: 100%;
 }
-.login {
-	width: 750rpx;
-	-webkit-box-flex: 1;
-	-webkit-flex: 1;
-	        flex: 1;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+.login-btn {
+	border-radius: 50rpx;
 }
-.goback {
-	width: 90%;
-	background: #eee;
-	color: #333;
-	margin-bottom: 24rpx;
-}
-.loginWx {
-	width: 90%;
-	background: #04BE02;
-	margin-bottom: 24rpx;
+.weixin {
+	width: 50rpx;
+	height: 50rpx;
+	padding-right: 20rpx;
 }
 

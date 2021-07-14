@@ -1,1 +1,0 @@
-<view class="content"><image class="logo" src="/static/logo.png"></image><view class="text-area"><text class="title">xxx授权</text><block wx:if="{{canIGetUserProfile}}"><button class="login-btn" type="primary" data-event-opts="{{[['tap',[['bindGetUserInfo',['$event']]]]]}}" bindtap="__e">授权登录</button></block></view></view>

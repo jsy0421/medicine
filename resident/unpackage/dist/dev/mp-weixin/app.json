@@ -1,11 +1,12 @@
 {
   "pages": [
+    "pages/login/login",
+    "pages/prescription/prescription",
     "pages/record/record",
     "pages/index/index",
     "pages/apply/choosedoc",
     "pages/apply/apply",
-    "pages/apply/add",
-    "pages/login/login"
+    "pages/apply/add"
   ],
   "subPackages": [],
   "window": {

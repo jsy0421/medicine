@@ -27,6 +27,14 @@
   margin-right: auto;
   margin-bottom: 50rpx;
 }
+.img.data-v-57280228 {
+  height: 200rpx;
+  width: 200rpx;
+  margin-top: 100rpx;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50rpx;
+}
 .text-area.data-v-57280228 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -36,7 +44,7 @@
           justify-content: center;
 }
 .title.data-v-57280228 {
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #606266;
 }
 .button-demo.data-v-57280228 {

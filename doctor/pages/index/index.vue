@@ -1,16 +1,16 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
+		<image class="img" src="/static/icon/复诊配药.png" @click="redirect1"></image>
 		<view class="text-area">
 			<text class="title">
-				uView - 多平台快速开发的UI框架
+				复诊配药
 			</text>
 		</view>
-		<view class="button-demo">
-			<u-button :ripple="true">按钮组件演示</u-button>
-		</view>
-		<view class="link-demo">
-			<u-link :color="$u.color['primary']" :under-line="true" href="http://www.uviewui.com">跳转uView文档：www.uviewui.com</u-link>
+		<image class="img" src="/static/icon/配药记录.png" @click="redirect2"></image>
+		<view class="text-area">
+			<text class="title">
+				配药记录
+			</text>
 		</view>
 	</view>
 </template>
@@ -19,14 +19,17 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-
+			redirect1(){
+				uni.navigateTo({
+				    url: '../apply/apply'
+				});
+			}
 		}
 	}
 </script>
@@ -48,6 +51,14 @@
 		margin-right: auto;
 		margin-bottom: 50rpx;
 	}
+	.img{
+		height: 200rpx;
+		width: 200rpx;
+		margin-top: 100rpx;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 50rpx;
+	}
 
 	.text-area {
 		display: flex;
@@ -55,7 +66,7 @@
 	}
 	
 	.title {
-		font-size: 28rpx;
+		font-size: 32rpx;
 		color: $u-content-color;
 	}
 	
