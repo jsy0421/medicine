@@ -23,6 +23,7 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -30,19 +31,17 @@
     },
     "enableEngineNative": false,
     "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "showES6CompileOption": false,
-    "useApiHostProcess": false
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.18.0",
-  "appid": "wxf3c572b5e01fad13",
+  "libVersion": "",
+  "appid": "wxc485e910d320a0b3",
   "projectname": "uView-demo",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
       "list": []
