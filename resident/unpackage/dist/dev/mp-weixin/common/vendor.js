@@ -979,11 +979,6 @@ function initProperties(props) {var isBehavior = arguments.length > 1 && argumen
       type: Object,
       value: null };
 
-    // scopedSlotsCompiler auto
-    properties.scopedSlotsCompiler = {
-      type: String,
-      value: '' };
-
     properties.vueSlots = { // 小程序不能直接定义 $slots 的 props，所以通过 vueSlots 转换到 $slots
       type: null,
       value: [],
@@ -1379,14 +1374,11 @@ function initScopedSlotsParams() {
   };
 
   _vue.default.prototype.$setScopedSlotsParams = function (name, value) {
-    var vueIds = this.$options.propsData.vueId;
-    if (vueIds) {
-      var vueId = vueIds.split(',')[0];
-      var object = center[vueId] = center[vueId] || {};
-      object[name] = value;
-      if (parents[vueId]) {
-        parents[vueId].$forceUpdate();
-      }
+    var vueId = this.$options.propsData.vueId;
+    var object = center[vueId] = center[vueId] || {};
+    object[name] = value;
+    if (parents[vueId]) {
+      parents[vueId].$forceUpdate();
     }
   };
 
@@ -1792,7 +1784,6 @@ function createSubpackageApp(vm) {
   var app = getApp({
     allowDefault: true });
 
-  vm.$scope = app;
   var globalData = app.globalData;
   if (globalData) {
     Object.keys(appOptions.globalData).forEach(function (name) {
@@ -1808,17 +1799,17 @@ function createSubpackageApp(vm) {
   });
   if (isFn(appOptions.onShow) && wx.onAppShow) {
     wx.onAppShow(function () {for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}
-      vm.__call_hook('onShow', args);
+      appOptions.onShow.apply(app, args);
     });
   }
   if (isFn(appOptions.onHide) && wx.onAppHide) {
     wx.onAppHide(function () {for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {args[_key6] = arguments[_key6];}
-      vm.__call_hook('onHide', args);
+      appOptions.onHide.apply(app, args);
     });
   }
   if (isFn(appOptions.onLaunch)) {
     var args = wx.getLaunchOptionsSync && wx.getLaunchOptionsSync();
-    vm.__call_hook('onLaunch', args);
+    appOptions.onLaunch.call(app, args);
   }
   return vm;
 }
@@ -7396,8 +7387,7 @@ function _diff(current, pre, path, result) {
                 var currentType = type(currentValue);
                 var preType = type(preValue);
                 if (currentType != ARRAYTYPE && currentType != OBJECTTYPE) {
-                    // NOTE 此处将 != 修改为 !==。涉及地方太多恐怕测试不到，如果出现数据对比问题，将其修改回来。
-                    if (currentValue !== pre[key]) {
+                    if (currentValue != pre[key]) {
                         setResult(result, (path == '' ? '' : path + ".") + key, currentValue);
                     }
                 } else if (currentType == ARRAYTYPE) {
@@ -8008,9 +7998,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!****************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/pages.json ***!
-  \****************************************************/
+/*!******************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/pages.json ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8151,9 +8141,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 11 */
-/*!***********************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/index.js ***!
-  \***********************************************************/
+/*!*************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/index.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8302,9 +8292,9 @@ var install = function install(Vue) {
 
 /***/ }),
 /* 12 */
-/*!**********************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/mixin/mixin.js ***!
-  \**********************************************************************/
+/*!************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/mixin/mixin.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8375,9 +8365,9 @@ var install = function install(Vue) {
 
 /***/ }),
 /* 13 */
-/*!************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/request/index.js ***!
-  \************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/request/index.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8555,9 +8545,9 @@ new Request();exports.default = _default;
 
 /***/ }),
 /* 14 */
-/*!*****************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/deepMerge.js ***!
-  \*****************************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/deepMerge.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8595,9 +8585,9 @@ deepMerge;exports.default = _default;
 
 /***/ }),
 /* 15 */
-/*!*****************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/deepClone.js ***!
-  \*****************************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/deepClone.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8628,9 +8618,9 @@ deepClone;exports.default = _default;
 
 /***/ }),
 /* 16 */
-/*!************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/test.js ***!
-  \************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/test.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8869,9 +8859,9 @@ function code(value) {var len = arguments.length > 1 && arguments[1] !== undefin
 
 /***/ }),
 /* 17 */
-/*!*******************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/queryParams.js ***!
-  \*******************************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/queryParams.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8937,17 +8927,17 @@ queryParams;exports.default = _default;
 
 /***/ }),
 /* 18 */
-/*!*************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/route.js ***!
-  \*************************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/route.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 路由跳转方法，该方法相对于直接使用uni.xxx的好处是使用更加简单快捷
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 并且带有路由拦截功能
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */var
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 路由跳转方法，该方法相对于直接使用uni.xxx的好处是使用更加简单快捷
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 并且带有路由拦截功能
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */var
 
 Router = /*#__PURE__*/function () {
   function Router() {_classCallCheck(this, Router);
@@ -9858,9 +9848,9 @@ if (hadRuntime) {
 
 /***/ }),
 /* 22 */
-/*!******************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/timeFormat.js ***!
-  \******************************************************************************/
+/*!********************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/timeFormat.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9919,9 +9909,9 @@ timeFormat;exports.default = _default;
 
 /***/ }),
 /* 23 */
-/*!****************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/timeFrom.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/timeFrom.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9976,9 +9966,9 @@ timeFrom;exports.default = _default;
 
 /***/ }),
 /* 24 */
-/*!*********************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/colorGradient.js ***!
-  \*********************************************************************************/
+/*!***********************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/colorGradient.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10119,9 +10109,9 @@ function colorToRgba(color) {var alpha = arguments.length > 1 && arguments[1] !=
 
 /***/ }),
 /* 25 */
-/*!************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/guid.js ***!
-  \************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/guid.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10170,9 +10160,9 @@ guid;exports.default = _default;
 
 /***/ }),
 /* 26 */
-/*!*************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/color.js ***!
-  \*************************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/color.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10217,9 +10207,9 @@ color;exports.default = _default;
 
 /***/ }),
 /* 27 */
-/*!*****************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/type2icon.js ***!
-  \*****************************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/type2icon.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10262,9 +10252,9 @@ type2icon;exports.default = _default;
 
 /***/ }),
 /* 28 */
-/*!*******************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/randomArray.js ***!
-  \*******************************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/randomArray.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10279,9 +10269,9 @@ randomArray;exports.default = _default;
 
 /***/ }),
 /* 29 */
-/*!***************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/addUnit.js ***!
-  \***************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/addUnit.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10297,9 +10287,9 @@ function addUnit() {var value = arguments.length > 0 && arguments[0] !== undefin
 
 /***/ }),
 /* 30 */
-/*!**************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/random.js ***!
-  \**************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/random.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10317,9 +10307,9 @@ random;exports.default = _default;
 
 /***/ }),
 /* 31 */
-/*!************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/trim.js ***!
-  \************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/trim.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10342,9 +10332,9 @@ trim;exports.default = _default;
 
 /***/ }),
 /* 32 */
-/*!*************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/toast.js ***!
-  \*************************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/toast.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10362,9 +10352,9 @@ toast;exports.default = _default;
 
 /***/ }),
 /* 33 */
-/*!*****************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/getParent.js ***!
-  \*****************************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/getParent.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10419,9 +10409,9 @@ function getParent(name, keys) {
 
 /***/ }),
 /* 34 */
-/*!***************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/$parent.js ***!
-  \***************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/$parent.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10447,9 +10437,9 @@ function $parent() {var name = arguments.length > 0 && arguments[0] !== undefine
 
 /***/ }),
 /* 35 */
-/*!***********************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/sys.js ***!
-  \***********************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/sys.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10465,9 +10455,9 @@ function sys() {
 
 /***/ }),
 /* 36 */
-/*!****************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/debounce.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/debounce.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10504,9 +10494,9 @@ debounce;exports.default = _default;
 
 /***/ }),
 /* 37 */
-/*!****************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/function/throttle.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/function/throttle.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10546,9 +10536,9 @@ throttle;exports.default = _default;
 
 /***/ }),
 /* 38 */
-/*!************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/config/config.js ***!
-  \************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/config/config.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10569,9 +10559,9 @@ var version = '1.8.3';var _default =
 
 /***/ }),
 /* 39 */
-/*!************************************************************************!*\
-  !*** E:/大学/大三下课程/短学期/medicine/resident/uview-ui/libs/config/zIndex.js ***!
-  \************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/26891/Desktop/617/resident/uview-ui/libs/config/zIndex.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -284,6 +284,7 @@ export default {
 @import "../../libs/css/style.components.scss";
 	
 .u-field {
+	height: 120rpx;
 	font-size: 28rpx;
 	padding: 20rpx 28rpx;
 	text-align: left;

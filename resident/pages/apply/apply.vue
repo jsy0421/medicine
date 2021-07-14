@@ -1,19 +1,21 @@
 <template>
 	<view class="content">
 		<Head></Head>
+		<Doctor></Doctor>
 	</view>
 </template>
 
 <script>
 	import Head from './components/head.vue'
+	import Doctor from './components/doctor.vue'
 	
 	export default {
 		components:{
-			Head,
+			Head,Doctor
 		},
 		data() {
 			return {
-				title: 'Hello'
+				
 			}
 		},
 		onLoad() {

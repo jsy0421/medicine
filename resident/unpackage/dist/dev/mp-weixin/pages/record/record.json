@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "uView-center",
+  "usingComponents": {
+    "single": "/pages/record/components/single"
+  }
+}

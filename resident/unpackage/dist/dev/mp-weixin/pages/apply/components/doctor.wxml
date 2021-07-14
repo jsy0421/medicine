@@ -1,0 +1,1 @@
+<view class="content data-v-1cffa7ee"><u-image vue-id="fa145250-1" src="../../../static/center-selected.png" shape="circle" width="120rpx" height="120rpx" class="data-v-1cffa7ee" bind:__l="__l"></u-image><text class="data-v-1cffa7ee">姓名</text></view>

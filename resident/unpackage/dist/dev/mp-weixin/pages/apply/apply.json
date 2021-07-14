@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "uView-center",
   "usingComponents": {
-    "head": "/pages/apply/components/head"
+    "head": "/pages/apply/components/head",
+    "doctor": "/pages/apply/components/doctor"
   }
 }

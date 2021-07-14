@@ -1,20 +1,27 @@
 <template>
 	<view class="content">
-		<image class="logo" :src="avatarUrl"></image>
-		<text class="title">{{nickName}}</text>
+		<image class="logo" src="/static/logo.png"></image>
 		<view class="text-area">
+			<!-- <text class="title">{{title}}</text> -->
 			<view class="page-login">
 				<view v-if="canIUse||canIGetUserProfile">
+					<view class='login-header'>
+						<image style="width: 140rpx; height: 140rpx;" mode="aspectFit" src="../../static/logo.png">
+						</image>
+						<view class="name">登录</view>
+					</view>
+					<view class='content'>
+						<view>申请获取以下权限</view>
+						<text>获得你的公开信息(昵称、头像、地区等)</text>
+					</view>
+
 					<view class="login-box">
 						<!--新版登录方式-->
 						<button v-if="canIGetUserProfile" class='login-btn' type='primary' @click="bindGetUserInfo">
-							<image src="../../static/微信.png" class="weixin" style="vertical-align:middle"></image><text class="weixinText">微信快捷登录</text>
-						</button>
+							授权登录 </button>
 						<!--旧版登录方式-->
 						<button v-else class='login-btn' type='primary' open-type="getUserInfo" withCredentials="true"
-							lang="zh_CN" @getuserinfo="bindGetUserInfo">
-							<image src="../../static/微信.png" class="weixin" style="vertical-align:middle"></image><text class="weixinText">微信快捷登录</text>
-						</button>
+							lang="zh_CN" @getuserinfo="bindGetUserInfo"> 授权登录 </button>
 					</view>
 				</view>
 				<view v-else class="text-center">
@@ -32,8 +39,8 @@
 				title: 'Hello',
 				sessionKey: '',
 				openId: '',
-				nickName: '微信用户',
-				avatarUrl: "../../static/center.png",
+				nickName: null,
+				avatarUrl: null,
 				userInfo: {},
 				canIUse: uni.canIUse('button.open-type.getUserInfo'),
 				canIGetUserProfile: false,
@@ -115,7 +122,6 @@
 						//console.log(res);
 						if (res.code) {
 							let code = res.code;
-							_this.updateUserInfo();
 							//将用户登录code传递到后台置换用户SessionKey、OpenId等信息
 							//...写用code置换SessionKey、OpenId的接口
 							//置换成功调用登录方法_this.updateUserInfo();
@@ -131,9 +137,9 @@
 			},
 			//向后台更新信息
 			updateUserInfo() {
-				// uni.showLoading({
-				// 	title: '登录中...'
-				// });
+				uni.showLoading({
+					title: '登录中...'
+				});
 				let _this = this;
 				var params = {
 					openId: _this.openId,
@@ -145,8 +151,6 @@
 					country: _this.userInfo.country,
 					unionId: '',
 				}
-				_this.avatarUrl = _this.userInfo.avatarUrl;
-				_this.nickName = _this.userInfo.nickName;
 				//console.log('登录');
 				//...后台登录的接口
 			}
@@ -171,26 +175,35 @@
 		margin-bottom: 50rpx;
 	}
 
+	.text-area {
+		display: flex;
+		justify-content: center;
+	}
+
 	.title {
 		font-size: 36rpx;
 		color: #8f8f94;
 	}
 
-	.text-area {
+	.login {
+		width: 750rpx;
+		flex: 1;
 		display: flex;
+		flex-direction: column;
+		align-items: center;
 		justify-content: center;
-		margin-top: 10%;
-		width: 80%;
 	}
-	.page-login{
-		width: 100%;
+
+	.goback {
+		width: 90%;
+		background: #eee;
+		color: #333;
+		margin-bottom: 24rpx;
 	}
-	.login-btn{
-		border-radius: 50rpx;
-	}
-	.weixin{
-		width: 50rpx;
-		height: 50rpx;
-		padding-right: 20rpx;
+
+	.loginWx {
+		width: 90%;
+		background: #04BE02;
+		margin-bottom: 24rpx;
 	}
 </style>

@@ -1,8 +1,11 @@
 {
   "pages": [
-    "pages/login/login",
+    "pages/record/record",
     "pages/index/index",
-    "pages/apply/apply"
+    "pages/apply/choosedoc",
+    "pages/apply/apply",
+    "pages/apply/add",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {
@@ -10,6 +13,26 @@
     "navigationBarTitleText": "uView",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#909399",
+    "selectedColor": "#303133",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/index.png",
+        "selectedIconPath": "static/index-selected.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/record/record",
+        "iconPath": "static/center.png",
+        "selectedIconPath": "static/center-selected.png",
+        "text": "我"
+      }
+    ]
   },
   "usingComponents": {}
 }

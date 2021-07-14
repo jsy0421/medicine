@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "uView-center",
+  "usingComponents": {
+    "u-field": "/uview-ui/components/u-field/u-field",
+    "u-action-sheet": "/uview-ui/components/u-action-sheet/u-action-sheet",
+    "u-calendar": "/uview-ui/components/u-calendar/u-calendar",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-top-tips": "/uview-ui/components/u-top-tips/u-top-tips"
+  }
+}
