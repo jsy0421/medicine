@@ -73,7 +73,7 @@
 								method: 'GET',
 								data: {
 									appid: 'wxc485e910d320a0b3', //你的小程序的APPID  
-									secret: '65df3a78b1ee0d2d46d6d4667d0a8407', //你的小程序的secret,  
+									secret: '******', //你的小程序的secret, //65df3a78b1ee0d2d46d6d4667d0a8407
 									js_code: res.code, //wx.login 登录成功后的code  
 									grant_type: 'authorization_code',
 								},
