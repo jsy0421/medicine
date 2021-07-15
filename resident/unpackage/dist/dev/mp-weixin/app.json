@@ -1,12 +1,11 @@
 {
   "pages": [
-    "pages/login/login",
-    "pages/prescription/prescription",
-    "pages/record/record",
     "pages/index/index",
+    "pages/record/record",
     "pages/apply/choosedoc",
     "pages/apply/apply",
-    "pages/apply/add"
+    "pages/apply/add",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {
@@ -28,7 +27,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/record/record",
+        "pagePath": "pages/apply/choosedoc",
         "iconPath": "static/center.png",
         "selectedIconPath": "static/center-selected.png",
         "text": "我"

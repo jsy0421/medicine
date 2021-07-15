@@ -4,25 +4,14 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "登录"
-			}
-		},{
-			"path": "pages/prescription/prescription",
-			"style": {
-				"navigationBarTitleText": "电子处方"
-			}
-		},{
-			"path": "pages/record/record",
-			"style": {
-				"navigationBarTitleText": "uView-center"
-			}
-		},
-		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "uView-index"
+			}
+		}, {
+			"path": "pages/record/record",
+			"style": {
+				"navigationBarTitleText": "uView-center"
 			}
 		},
 		{
@@ -42,8 +31,13 @@
 			"style": {
 				"navigationBarTitleText": "uView-center"
 			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "uView-center"
+			}
 		}
-		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -52,20 +46,20 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
-	    "color": "#909399",
-	    "selectedColor": "#303133",
-	    "borderStyle": "black",
-	    "backgroundColor": "#ffffff",
-	    "list": [{
-	        "pagePath": "pages/index/index",
-	        "iconPath": "static/index.png",
-	        "selectedIconPath": "static/index-selected.png",
-	        "text": "首页"
-	    },{
-	        "pagePath": "pages/record/record",
-	        "iconPath": "static/center.png",
-	        "selectedIconPath": "static/center-selected.png",
-	        "text": "我"
-	    }]
+		"color": "#909399",
+		"selectedColor": "#303133",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/index.png",
+			"selectedIconPath": "static/index-selected.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/apply/choosedoc",
+			"iconPath": "static/center.png",
+			"selectedIconPath": "static/center-selected.png",
+			"text": "我"
+		}]
 	}
 }

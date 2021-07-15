@@ -19,15 +19,21 @@
 	export default {
 		data() {
 			return {
+				datareturn:{}
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-			redirect1(){
+			redirect1() {
 				uni.navigateTo({
-				    url: '../apply/apply'
+					url: '../apply/apply'
+				});
+			},
+			redirect2() {
+				uni.navigateTo({
+				    url: '../record/record'
 				});
 			}
 		}
@@ -51,7 +57,8 @@
 		margin-right: auto;
 		margin-bottom: 50rpx;
 	}
-	.img{
+
+	.img {
 		height: 200rpx;
 		width: 200rpx;
 		margin-top: 100rpx;
@@ -64,16 +71,16 @@
 		display: flex;
 		justify-content: center;
 	}
-	
+
 	.title {
 		font-size: 32rpx;
 		color: $u-content-color;
 	}
-	
+
 	.button-demo {
 		margin-top: 80rpx;
 	}
-	
+
 	.link-demo {
 		margin-top: 80rpx;
 	}

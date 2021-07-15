@@ -1,9 +1,10 @@
 <template>
 	<view class="u-menu-wrap">
+		<u-modal v-model="modal_show" @confirm="confirm" @cancel="cancel" :content="content" show-cancel-button=true></u-modal>
 		<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
 			<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item"
 				:class="[current==index ? 'u-tab-item-active' : '']" :data-current="index" @tap.stop="swichMenu(index)">
-				<text class="u-line-1">{{item.name}}</text>
+				<text class="u-line-1">{{item.deptName}}</text>
 			</view>
 		</scroll-view>
 		<block v-for="(item,index) in tabbar" :key="index">
@@ -11,12 +12,13 @@
 				<view class="page-view">
 					<view class="class-item">
 						<view class="item-title">
-							<text>{{item.name}}</text>
+							<text>{{item.deptName}}</text>
 						</view>
 						<view class="item-container">
-							<view class="thumb-box" v-for="(item1, index1) in item.foods" :key="index1">
-								<image class="item-menu-image" :src="item1.icon" mode=""></image>
-								<view class="item-menu-name">{{item1.name}}</view>
+							<view class="thumb-box" v-for="(item1, index1) in item.doctors" :key="index1" @click="chooseDoc(item1)">
+								<image class="item-menu-image" :src="item1.avatarUrl" mode=""></image>
+								<view class="item-menu-name">{{item1.doctorName}}</view>
+								<view class="item-menu-name">{{item1.levelName}}</view>
 							</view>
 						</view>
 					</view>
@@ -30,82 +32,84 @@
 	export default {
 		data() {
 			return {
+				modal_show:false,
+				content:'确认选择该医生吗？',
+				mychoice:'',
 				tabbar: [{
-						"name": "女装",
-						"foods": [{
-								"name": "半身裙",
-								"key": "半身裙",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-								"cat": 10
+						"deptName": "麻醉科",
+						"doctors": [{
+								"doctorId":'1',
+								"doctorName": "a1",
+								"levelName": "主治医师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
 							},
 							{
-								"name": "衬衫",
-								"key": "衬衫",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/1/4.jpg",
-								"cat": 10
-							},
+								"doctorId":'2',
+								"doctorName": "b2",
+								"levelName": "医师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
+							}, 
 							{
-								"name": "短裙",
-								"key": "短裙",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/1/5.jpg",
-								"cat": 10
-							},
+								"doctorId":'3',
+								"doctorName": "c3",
+								"levelName": "主师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
+							}, 
 							{
-								"name": "阔腿裤",
-								"key": "阔腿裤",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/1/6.jpg",
-								"cat": 10
+								"doctorId":'4',
+								"doctorName": "d4",
+								"levelName": "主治",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
 							},
 						]
-					},
-					{
-						"name": "美食",
-						"foods": [{
-								"name": "精品茗茶",
-								"key": "茶",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/2/7.jpg",
-								"cat": 6
+					},{
+						"deptName": "骨科",
+						"doctors": [{
+								"doctorId":'5',
+								"doctorName": "a1",
+								"levelName": "主治医师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
 							},
 							{
-								"name": "休闲食品",
-								"key": "休闲食品",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/2/8.jpg",
-								"cat": 6
-							},
+								"doctorId":'6',
+								"doctorName": "b2",
+								"levelName": "医师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
+							}, 
 							{
-								"name": "糖果巧克力",
-								"key": "糖果巧克力",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/2/9.jpg",
-								"cat": 6
-							},
-							{
-								"name": "方便速食",
-								"key": "方便速食",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/2/10.jpg",
-								"cat": 6
+								"doctorId":'7',
+								"doctorName": "c3",
+								"levelName": "主师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
 							}
 						]
 					},
 					{
-						"name": "户外运动",
-						"foods": [{
-								"name": "瑜伽用品",
-								"key": "瑜伽",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/14/7.jpg",
-								"cat": 0
+						"deptName": "精神科",
+						"doctors": [{
+								"doctorId":'8',
+								"doctorName": "a1",
+								"levelName": "主治医师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
 							},
 							{
-								"name": "健身装备",
-								"key": "健身",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/14/8.jpg",
-								"cat": 0
-							},
+								"doctorId":'9',
+								"doctorName": "b2",
+								"levelName": "医师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
+							}, 
 							{
-								"name": "球迷用品",
-								"key": "球迷",
-								"icon": "https://cdn.uviewui.com/uview/common/classify/14/9.jpg",
-								"cat": 0
-							}
+								"doctorId":'10',
+								"doctorName": "c3",
+								"levelName": "主师",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
+							}, 
+							{
+								"doctorId":'11',
+								"doctorName": "d4",
+								"levelName": "主治",
+								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
+							},
 						]
 					}
 				],
@@ -145,6 +149,21 @@
 						this[dataVal] = res.height;
 					}).exec();
 				})
+			},
+			chooseDoc(item){
+				console.log(item)
+				this.mychoice=item.doctorId
+				this.modal_show=true
+			},
+			confirm(){
+				console.log(this.mychoice)
+				uni.navigateTo({
+					url: '../apply/apply'
+				});
+			},
+			cancel(){
+				this.mychoice=''
+				// console.log(this.mychoice)
 			}
 		}
 	}

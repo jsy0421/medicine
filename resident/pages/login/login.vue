@@ -1,16 +1,31 @@
 <template>
 	<view class="content">
-		<image class="logo" :src="avatarUrl"></image>
-		<text class="title">{{nickName}}</text>
+		<image class="logo" src="/static/logo.png"></image>
 		<view class="text-area">
+			<!-- <text class="title">{{title}}</text> -->
 			<view class="page-login">
-				<view class="login-box">
-					<!--新版登录方式-->
-					<button class='login-btn' type='primary' @click="bindGetUserInfo" open-type="getPhoneNumber"
-						@getphonenumber="getPhoneNumber">
-						<image src="../../static/微信.png" class="weixin" style="vertical-align:middle"></image><text
-							class="weixinText">微信快捷登录</text>
-					</button>
+				<view v-if="canIUse||canIGetUserProfile">
+					<view class='login-header'>
+						<image style="width: 140rpx; height: 140rpx;" mode="aspectFit" src="../../static/logo.png">
+						</image>
+						<view class="name">登录</view>
+					</view>
+					<view class='content'>
+						<view>申请获取以下权限</view>
+						<text>获得你的公开信息(昵称、头像、地区等)</text>
+					</view>
+
+					<view class="login-box">
+						<!--新版登录方式-->
+						<button v-if="canIGetUserProfile" class='login-btn' type='primary' @click="bindGetUserInfo">
+							授权登录 </button>
+						<!--旧版登录方式-->
+						<button v-else class='login-btn' type='primary' open-type="getUserInfo" withCredentials="true"
+							lang="zh_CN" @getuserinfo="bindGetUserInfo"> 授权登录 </button>
+					</view>
+				</view>
+				<view v-else class="text-center">
+					请升级微信版本
 				</view>
 			</view>
 		</view>
@@ -18,35 +33,60 @@
 </template>
 
 <script>
-	import WXBizDataCrypt from "@/WXBizDataCrypt.js";
 	export default {
 		data() {
 			return {
 				title: 'Hello',
 				sessionKey: '',
 				openId: '',
-				nickName: '微信用户',
-				avatarUrl: "../../static/center.png",
+				nickName: null,
+				avatarUrl: null,
 				userInfo: {},
-				encryptedData: '',
-				iv: '',
-				unionId: '',
-				phoneNumber: '',
-				isCanUse: uni.setStorageSync('isCanUse', true) //默认为true  记录当前用户是否是第一次授权使用的
+				canIUse: uni.canIUse('button.open-type.getUserInfo'),
+				canIGetUserProfile: false,
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			var _this = this;
+			//console.log(uni.getUserProfile);
+			if (uni.getUserProfile) {
+				this.canIGetUserProfile = true;
+			}
+			//判断若是版本不支持新版则采用旧版登录方式
+			//查看是否授权
+			if (!this.canIGetUserProfile) {
+				uni.getSetting({
+					success: function(res) {
+						if (res.authSetting['scope.userInfo']) {
+							uni.getUserInfo({
+								provider: 'weixin',
+								success: function(res) {
+									//console.log(res);
+									_this.userInfo = res.userInfo;
+									try {
+										_this.login();
+									} catch (e) {}
+								},
+								fail(res) {}
+							});
+						} else {
+							// 用户没有授权
+							console.log('用户还没有授权');
+						}
+					}
+				});
+			}
+		},
 		methods: {
 			//登录授权
 			bindGetUserInfo(e) {
 				var _this = this;
-				//新版登录方式
-				var isCanUse = uni.getStorageSync('isCanUse');
-				if (isCanUse) {
+				if (this.canIGetUserProfile) {
+					//新版登录方式
 					uni.getUserProfile({
 						desc: '登录',
 						success: (res) => {
-							console.log(res);
+							//console.log(res);
 							_this.userInfo = res.userInfo;
 							try {
 								_this.login();
@@ -56,6 +96,20 @@
 							console.log(res)
 						}
 					});
+				} else {
+					//旧版登录方式
+					if (e.detail.userInfo) {
+						//用户按了允许授权按钮
+						//console.log('手动');
+						//console.log(e.detail.userInfo);
+						_this.userInfo = e.detail.userInfo;
+						try {
+							_this.login();
+						} catch (e) {}
+					} else {
+						console.log('用户拒绝了授权');
+						//用户按了拒绝按钮
+					}
 				}
 			},
 			//登录
@@ -65,31 +119,11 @@
 				uni.login({
 					provider: 'weixin',
 					success: function(res) {
-						// console.log(res);
+						//console.log(res);
 						if (res.code) {
-							// let code = res.code;
-							uni.request({
-								url: 'https://api.weixin.qq.com/sns/jscode2session',
-								method: 'GET',
-								data: {
-									appid: 'wxc485e910d320a0b3', //你的小程序的APPID  
-									secret: '******', //你的小程序的secret, //65df3a78b1ee0d2d46d6d4667d0a8407
-									js_code: res.code, //wx.login 登录成功后的code  
-									grant_type: 'authorization_code',
-								},
-								success: (cts) => {
-									// 换取成功后 暂存这些数据 留作后续操作  
-									_this.openId = cts.data.openid //openid 用户唯一标识  
-									_this.unionid = cts.data
-										.unionid //unionid 开放平台唯一标识   当公众号和小程序同时登录过才会有
-									_this.sessionKey = cts.data.session_key //session_key  会话密钥  
-									console.log(cts)
-									console.log(_this.openId, _this.sessionKey)
-								}
-							});
-							_this.avatarUrl = _this.userInfo.avatarUrl;
-							_this.nickName = _this.userInfo.nickName;
-							// uni.setStorageSync('isCanUse', false);
+							let code = res.code;
+							//将用户登录code传递到后台置换用户SessionKey、OpenId等信息
+							//...写用code置换SessionKey、OpenId的接口
 							//置换成功调用登录方法_this.updateUserInfo();
 						} else {
 							uni.showToast({
@@ -103,39 +137,23 @@
 			},
 			//向后台更新信息
 			updateUserInfo() {
-				let _this = this;
-				console.log(_this.phoneNumber);
-				var params = {
-					mini_open_id: _this.openId,
-					user_id: _this.userInfo.nickName,
-					user_type: "1",
-					phone_no: _this.phoneNumber
-				}
-				console.log('登录');
-				//...后台登录的接口
-			},
-			getPhoneNumber: function(e) {
-				let _this = this;
-				console.log(uni.getStorageSync('isCanUse'));
-				setTimeout(function() {
-					_this.encryptedData = e.detail.encryptedData;
-					_this.iv = e.detail.iv;
-					var pc = new WXBizDataCrypt('wxc485e910d320a0b3', _this
-						.sessionKey); //wxXXXXXXX为你的小程序APPID
-					var data = pc.decryptData(_this.encryptedData, _this.iv);
-					_this.phoneNumber = data.phoneNumber;
-					console.log(data);
-					var isCanUse = uni.getStorageSync('isCanUse');
-					if (isCanUse){
-						_this.updateUserInfo();
-					}
-					uni.setStorageSync('isCanUse', false);
-				}, 4000);
 				uni.showLoading({
-					title: '登录中...',
-					duration: 4000
+					title: '登录中...'
 				});
-			},
+				let _this = this;
+				var params = {
+					openId: _this.openId,
+					nickName: _this.userInfo.nickName,
+					avatarUrl: _this.userInfo.avatarUrl,
+					gender: _this.userInfo.gender,
+					city: _this.userInfo.city,
+					province: _this.userInfo.province,
+					country: _this.userInfo.country,
+					unionId: '',
+				}
+				//console.log('登录');
+				//...后台登录的接口
+			}
 		}
 	}
 </script>
@@ -157,29 +175,35 @@
 		margin-bottom: 50rpx;
 	}
 
+	.text-area {
+		display: flex;
+		justify-content: center;
+	}
+
 	.title {
 		font-size: 36rpx;
 		color: #8f8f94;
 	}
 
-	.text-area {
+	.login {
+		width: 750rpx;
+		flex: 1;
 		display: flex;
+		flex-direction: column;
+		align-items: center;
 		justify-content: center;
-		margin-top: 10%;
-		width: 80%;
 	}
 
-	.page-login {
-		width: 100%;
+	.goback {
+		width: 90%;
+		background: #eee;
+		color: #333;
+		margin-bottom: 24rpx;
 	}
 
-	.login-btn {
-		border-radius: 50rpx;
-	}
-
-	.weixin {
-		width: 50rpx;
-		height: 50rpx;
-		padding-right: 20rpx;
+	.loginWx {
+		width: 90%;
+		background: #04BE02;
+		margin-bottom: 24rpx;
 	}
 </style>

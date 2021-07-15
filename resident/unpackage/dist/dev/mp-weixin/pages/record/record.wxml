@@ -1,1 +1,1 @@
-<view class="content data-v-3b6eb0a6"><single vue-id="3267e520-1" class="data-v-3b6eb0a6" bind:__l="__l"></single><single vue-id="3267e520-2" class="data-v-3b6eb0a6" bind:__l="__l"></single></view>
+<view class="content data-v-3b6eb0a6"><block wx:for="{{recordData.result}}" wx:for-item="item" wx:for-index="__i0__" wx:key="index"><single vue-id="{{'3267e520-1-'+__i0__}}" result_item="{{item}}" class="data-v-3b6eb0a6" bind:__l="__l"></single></block></view>
