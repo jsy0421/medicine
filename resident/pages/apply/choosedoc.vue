@@ -41,7 +41,8 @@
 				},
 				modal_show:false,
 				content:'确认选择该医生吗？',
-				depid:'1',
+				// depid:'1',
+				orgId:'',
 				tabbar: [],
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
@@ -49,9 +50,10 @@
 				menuItemHeight: 0, // 左边菜单item的高度
 			}
 		},
-		onLoad() {
+		onLoad(option) {
+			this.orgId=option.orgId
 			uni.request({
-				url: `${this.$Url}/org/dept/${this.depid}`,//这里的lid,page,pagesize只能是数字或字母
+				url: `${this.$Url}/org/dept/${this.orgId}`,//这里的lid,page,pagesize只能是数字或字母
 				method: 'GET',
 				success: (res) => {
 					this.tabbar=res.data.result
@@ -103,7 +105,6 @@
 				this.modal_show=true
 			},
 			confirm(){
-				//传值：姓名 科室 头像 主任
 				var DoctorInfo = JSON.stringify(this.doctorInfo)
 				this.$event.notify('doctorEvent',DoctorInfo)
 				uni.navigateBack({

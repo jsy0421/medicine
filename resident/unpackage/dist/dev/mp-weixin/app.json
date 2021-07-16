@@ -27,13 +27,12 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/apply/add",
+        "pagePath": "pages/record/record",
         "iconPath": "static/center.png",
         "selectedIconPath": "static/center-selected.png",
         "text": "我"
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

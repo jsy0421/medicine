@@ -1,5 +1,172 @@
-
-.content.data-v-769a7324 {
-	margin: 0 15rpx;
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.content {
+  margin: 0 15rpx;
+}
+.doctor {
+  margin-top: 8rpx;
+  margin-bottom: 25rpx;
+  padding: 18rpx 24rpx;
+  border: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  background-color: #fff;
+}
+.doctor .doctorInfo {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.doctor .doctorInfo .avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 100%;
+  overflow: hidden;
+  margin: 18rpx;
+}
+.doctor .doctorInfo .avatar .avatar_img {
+  width: 100%;
+  height: 100%;
+}
+.doctor .doctorInfo .doctorName {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.doctor .doctorInfo .doctorName .name_title {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.doctor .doctorInfo .doctorName .name_title .doc_name_txt {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-right: 10rpx;
+}
+.doctor .doctorInfo .doctorName .name_title .tag {
+  display: inline-block;
+  padding: 4rpx 10rpx;
+  border: .5rpx solid #ff9900;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  color: #ff9900;
+}
+.doctor .doctorInfo .doctorName .sort {
+  font-size: 28rpx;
+  margin-top: 18rpx;
+}
+.doctor .changeDoctor {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  color: #999;
+}
+.doctor .changeDoctor .change_doc_txt {
+  line-height: 0;
+  margin-right: 14rpx;
+}
+.Form {
+  background-color: #fff;
+  padding: 0 24rpx 24rpx;
+  margin-bottom: 25rpx;
+}
+.Form .form_item {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  padding: 28rpx 0;
+}
+.Form .form_item .label_wrap {
+  color: #666;
+  font-size: 30rpx;
+}
+.Form .form_item .label_wrap .label_required_icon {
+  color: #f10;
+  font-size: 32rpx;
+  margin-right: 6rpx;
+}
+.Form .form_item .value {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.Form .form_item .value text {
+  margin-left: 8rpx;
+  line-height: 0;
+}
+.Form .form_item .value .value_txt {
+  color: #999;
+}
+.Form .ye_block_wrap {
+  border: .5rpx solid yellow;
+  width: 100%;
+  height: 70rpx;
+  margin-top: 10rpx;
+}
+.Form .add_drugs_form {
+  border: 0;
+}
+.Form .drugs_list_wrap {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+          flex-flow: row wrap;
+  padding: 30rpx 12rpx;
+}
+.Form .drugs_list_wrap .drugs_item {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  padding: 6rpx 13rpx;
+  border-radius: 8rpx;
+  background-color: #dbf1e1;
+  color: #18b566;
+  font-size: 26rpx;
+  margin-right: 38rpx;
+  margin-bottom: 30rpx;
+}
+.Form .drugs_list_wrap .drugs_item .drug_close_icon {
+  position: absolute;
+  right: -12rpx;
+  top: -12rpx;
 }
 

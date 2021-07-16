@@ -189,6 +189,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -198,7 +201,8 @@ var _default =
         personCardId: '',
         personPhoneNo: '',
         personGenderName: '',
-        personBirthDate: '' },
+        personBirthDate: '',
+        personAge: 0 },
 
       sexList: [{
         text: '男' },
@@ -222,12 +226,54 @@ var _default =
     changeCalendar: function changeCalendar(e) {
       this.userInfo.personBirthDate = e.result;
       console.log(this.userInfo.personBirthDate);
+      //算年龄
+      this.userInfo.personAge = this.$options.methods.getAge(this.userInfo.personBirthDate);
+    },
+    // 根据日期计算年龄
+    getAge: function getAge(strBirthday) {
+      //strBirthday传入格式 2020-04-15
+      var returnAge;
+      var strBirthdayArr = strBirthday.split('-');
+      var birthYear = strBirthdayArr[0];
+      var birthMonth = strBirthdayArr[1];
+      var birthDay = strBirthdayArr[2];
+      //获取当前日期
+      var d = new Date();
+      var nowYear = d.getFullYear();
+      var nowMonth = d.getMonth() + 1;
+      var nowDay = d.getDate();
+      if (nowYear == birthYear) {
+        returnAge = 0; //同年 则为0岁
+      } else {
+        var ageDiff = nowYear - birthYear; //年之差
+        if (ageDiff > 0) {
+          if (nowMonth == birthMonth) {
+            var dayDiff = nowDay - birthDay; //日之差
+            if (dayDiff < 0) {
+              returnAge = ageDiff - 1;
+            } else {
+              returnAge = ageDiff;
+            }
+          } else {
+            var monthDiff = nowMonth - birthMonth; //月之差
+            if (monthDiff < 0) {
+              returnAge = ageDiff - 1;
+            } else {
+              returnAge = ageDiff;
+            }
+          }
+        } else {
+          returnAge = -1; //返回-1 表示出生日期输入错误 晚于今天
+        }
+      }
+      return returnAge; //返回周岁年龄
     },
     showCalendar: function showCalendar() {
       this.showcalendar = true;
     },
     submitInfo: function submitInfo() {
-      if (this.userInfo.personBirthDate == '' || this.userInfo.personGenderName == '' || this.userInfo.personName == '' || this.userInfo.personCardId == '' || this.userInfo.personPhoneNo == '') {
+      if (this.userInfo.personBirthDate == '' || this.userInfo.personGenderName == '' || this.userInfo.
+      personName == '' || this.userInfo.personCardId == '' || this.userInfo.personPhoneNo == '') {
         this.$refs.uTips.show({
           title: '必填内容不能为空',
           type: 'error',
@@ -236,7 +282,7 @@ var _default =
       } else {
         var UserInfo = JSON.stringify(this.userInfo);
         this.$event.notify('userEvent', UserInfo);
-        uni.navigateTo({
+        uni.navigateBack({
           url: '../apply/apply' });
 
       }

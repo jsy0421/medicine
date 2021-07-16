@@ -28,9 +28,7 @@
 		},
 		methods: {
 			doc(){
-				uni.navigateTo({
-					url: '../apply/choosedoc'
-				});
+				
 			}
 		}
 	}
