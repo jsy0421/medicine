@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import App from './App'
+import event from './custom-event.js'
+
+const Event=new event();
+Vue.prototype.$event=Event;
 
 Vue.config.productionTip = false
 Vue.prototype.$Url = "http://localhost:12000"

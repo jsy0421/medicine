@@ -23,7 +23,11 @@
 		onLoad() {
 			uni.request({
 				url: `${this.$Url}/consult/history/${this.userid}`,//这里的lid,page,pagesize只能是数字或字母
+				url: 'http://localhost:12000/consult/history/',
 				method: 'GET',
+				data: {
+					userId: 'mkd',
+				},
 				success: (res) => {
 					this.recordData.result=res.data.result
 					console.log(res.data.result)

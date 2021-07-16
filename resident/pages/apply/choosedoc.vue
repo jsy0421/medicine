@@ -32,92 +32,35 @@
 	export default {
 		data() {
 			return {
+				doctorInfo:{
+					doctorId:'',
+					doctorName:'',
+					levelName:'',
+					avatarUrl:null,
+					deptName:''
+				},
 				modal_show:false,
 				content:'确认选择该医生吗？',
-				mychoice:'',
-				tabbar: [{
-						"deptName": "麻醉科",
-						"doctors": [{
-								"doctorId":'1',
-								"doctorName": "a1",
-								"levelName": "主治医师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							},
-							{
-								"doctorId":'2',
-								"doctorName": "b2",
-								"levelName": "医师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							}, 
-							{
-								"doctorId":'3',
-								"doctorName": "c3",
-								"levelName": "主师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							}, 
-							{
-								"doctorId":'4',
-								"doctorName": "d4",
-								"levelName": "主治",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							},
-						]
-					},{
-						"deptName": "骨科",
-						"doctors": [{
-								"doctorId":'5',
-								"doctorName": "a1",
-								"levelName": "主治医师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							},
-							{
-								"doctorId":'6',
-								"doctorName": "b2",
-								"levelName": "医师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							}, 
-							{
-								"doctorId":'7',
-								"doctorName": "c3",
-								"levelName": "主师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							}
-						]
-					},
-					{
-						"deptName": "精神科",
-						"doctors": [{
-								"doctorId":'8',
-								"doctorName": "a1",
-								"levelName": "主治医师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							},
-							{
-								"doctorId":'9',
-								"doctorName": "b2",
-								"levelName": "医师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							}, 
-							{
-								"doctorId":'10',
-								"doctorName": "c3",
-								"levelName": "主师",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							}, 
-							{
-								"doctorId":'11',
-								"doctorName": "d4",
-								"levelName": "主治",
-								"avatarUrl": "https://cdn.uviewui.com/uview/common/classify/1/3.jpg",
-							},
-						]
-					}
-				],
+				depid:'1',
+				tabbar: [],
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
 				menuItemHeight: 0, // 左边菜单item的高度
 			}
+		},
+		onLoad() {
+			uni.request({
+				url: `${this.$Url}/org/dept/${this.depid}`,//这里的lid,page,pagesize只能是数字或字母
+				method: 'GET',
+				success: (res) => {
+					this.tabbar=res.data.result
+					// console.log(res.data.result)
+				},
+				fail: (err) => {
+					console.log(err)
+				}
+			})
 		},
 		methods: {
 			// 点击左边的栏目切换
@@ -151,19 +94,24 @@
 				})
 			},
 			chooseDoc(item){
-				console.log(item)
-				this.mychoice=item.doctorId
+				this.doctorInfo.doctorId=item.doctorId,
+				this.doctorInfo.doctorName=item.doctorName,
+				this.doctorInfo.levelName=item.levelName,
+				this.doctorInfo.avatarUrl=item.avatarUrl,
+				this.doctorInfo.deptName=this.tabbar[this.current].deptName
+				// console.log(this.doctorInfo)
 				this.modal_show=true
 			},
 			confirm(){
-				console.log(this.mychoice)
-				uni.navigateTo({
+				//传值：姓名 科室 头像 主任
+				var DoctorInfo = JSON.stringify(this.doctorInfo)
+				this.$event.notify('doctorEvent',DoctorInfo)
+				uni.navigateBack({
 					url: '../apply/apply'
 				});
 			},
 			cancel(){
-				this.mychoice=''
-				// console.log(this.mychoice)
+				
 			}
 		}
 	}

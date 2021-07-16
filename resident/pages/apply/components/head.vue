@@ -8,7 +8,7 @@
 				<text>复诊配药详情</text>
 			</u-col>
 			<u-col span="2">
-				<u-button size="mini" hair-line="false">关闭</u-button>
+				<u-button size="mini" hair-line="false" @click="doc">关闭</u-button>
 			</u-col>
 		</u-row>
 	</view>
@@ -17,6 +17,23 @@
 </template>
 
 <script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		onLoad() {
+			
+		},
+		methods: {
+			doc(){
+				uni.navigateTo({
+					url: '../apply/choosedoc'
+				});
+			}
+		}
+	}
 </script>
 
 <style scoped lang="scss">

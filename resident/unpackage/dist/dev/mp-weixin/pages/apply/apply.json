@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "uView-center",
   "usingComponents": {
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-select": "/uview-ui/components/u-select/u-select",
     "head": "/pages/apply/components/head",
     "doctor": "/pages/apply/components/doctor"
   }
