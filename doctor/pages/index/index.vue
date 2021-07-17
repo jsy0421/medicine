@@ -19,15 +19,19 @@
 	export default {
 		data() {
 			return {
+				userId:''
 			}
 		},
-		onLoad() {
-
+		onLoad(option) {
+			if (option.userId != undefined){
+				this.userId = option.userId;
+				console.log(this.userId);
+			}
 		},
 		methods: {
 			redirect1(){
 				uni.navigateTo({
-				    url: '../apply/apply'
+				    url: '/pages/watchgeneral/watchgeneral?userId=' + this.userId
 				});
 			}
 		}

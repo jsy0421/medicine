@@ -1,14 +1,21 @@
 {
   "pages": [
     "pages/login/login",
-    "pages/index/index"
+    "pages/watchgeneral/watchgeneral",
+    "pages/watchdetail/watchdetail",
+    "pages/makeprescription/makeprescription",
+    "pages/index/index",
+    "pages/setmedicine/setmedicine",
+    "pages/addmedicine/addmedicine",
+    "pages/prescription/prescription"
   ],
   "subPackages": [],
   "window": {
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "white",
     "navigationBarTitleText": "uView",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarBackgroundColor": "#2979ff",
+    "backgroundColor": "#2979ff"
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

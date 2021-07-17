@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "电子处方",
+  "usingComponents": {
+    "u-subsection": "/uview-ui/components/u-subsection/u-subsection",
+    "u-card": "/uview-ui/components/u-card/u-card",
+    "u-divider": "/uview-ui/components/u-divider/u-divider"
+  }
+}

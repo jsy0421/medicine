@@ -25,7 +25,7 @@
 				title: 'Hello',
 				sessionKey: '',
 				openId: '',
-				nickName: '微信用户',
+				nickName: '',
 				avatarUrl: "../../static/center.png",
 				userInfo: {},
 				encryptedData: '',
@@ -73,7 +73,7 @@
 								method: 'GET',
 								data: {
 									appid: 'wxc485e910d320a0b3', //你的小程序的APPID  
-									secret: '******', //你的小程序的secret, //65df3a78b1ee0d2d46d6d4667d0a8407
+									secret: '****', //你的小程序的secret, //65df3a78b1ee0d2d46d6d4667d0a8407
 									js_code: res.code, //wx.login 登录成功后的code  
 									grant_type: 'authorization_code',
 								},
@@ -128,6 +128,10 @@
 					var isCanUse = uni.getStorageSync('isCanUse');
 					if (isCanUse){
 						_this.updateUserInfo();
+						console.log("nickName: " + _this.nickName);
+						uni.navigateTo({
+							url:'/pages/index/index?userId=' + _this.nickName
+						})
 					}
 					uni.setStorageSync('isCanUse', false);
 				}, 4000);

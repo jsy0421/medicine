@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "复诊配药",
+  "usingComponents": {
+    "u-subsection": "/uview-ui/components/u-subsection/u-subsection",
+    "u-card": "/uview-ui/components/u-card/u-card"
+  }
+}

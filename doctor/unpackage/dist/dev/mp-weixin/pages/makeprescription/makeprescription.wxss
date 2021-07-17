@@ -1,0 +1,91 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+page {
+  background-color: #f3f4f6;
+}
+.content {
+  background-color: #ffffff;
+  padding-top: 100rpx;
+  padding-bottom: 150rpx;
+}
+.subsection {
+  position: fixed;
+  top: 0rpx;
+  width: 100%;
+  z-index: 9999;
+}
+.need {
+  background-color: #fef0f0;
+  padding: 2%;
+}
+.drug_names {
+  margin-left: 10rpx;
+  color: #19be6b;
+}
+.u-card-wrap {
+  background-color: #ecf5ff;
+  padding: 1px;
+}
+.u-body-item {
+  font-size: 32rpx;
+  color: #333;
+  padding: 20rpx 10rpx;
+}
+.u-card__head {
+  background-color: #ecf5ff;
+}
+.midicineImg {
+  width: 60rpx;
+  height: 60rpx;
+  padding-right: 3%;
+}
+.prescriptionName {
+  width: 20%;
+}
+.add {
+  width: 30%;
+  margin-left: 40%;
+}
+.plusIcon {
+  padding-right: 2%;
+}
+.addMidicine {
+  color: #2979ff;
+}
+.specification {
+  margin-left: 10%;
+}
+.trash {
+  float: right;
+  padding-right: 5%;
+}
+.use {
+  color: #909399;
+}
+.button {
+  position: fixed;
+  bottom: 0rpx;
+  width: 100%;
+  z-index: 9999;
+}
+.button button {
+  height: 100rpx;
+}
+.addPrescription {
+  float: left;
+  width: 40%;
+  border-radius: 0;
+  font-size: 32rpx;
+}
+.submitPrescription {
+  float: right;
+  width: 60%;
+  background-color: #2b85e4;
+  border-radius: 0;
+  color: #FFFFFF;
+  font-size: 32rpx;
+}
+

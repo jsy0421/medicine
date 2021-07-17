@@ -204,10 +204,12 @@
 				style.zIndex = 1;
 				if (this.mode == 'button') {
 					style.backgroundColor = this.buttonColor;
-					style.borderRadius = `${this.borderRadius}px`;
 					style.bottom = `${this.buttonPadding}px`;
 					style.height = uni.upx2px(this.height) - this.buttonPadding * 2 + 'px';
 					style.zIndex = 0;
+					style.borderBottomColor = this.activeColor;
+					style.borderBottomWidth = '3px';
+					style.borderBottomStyle = 'solid';
 				}
 				return Object.assign(this.itemBgStyle, style);
 			}
