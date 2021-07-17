@@ -34,6 +34,7 @@
 	export default {
 		data() {
 			return {
+				chooseDrugName:'',
 				errorType: ['message'],
 				rules: {
 					personName: [{

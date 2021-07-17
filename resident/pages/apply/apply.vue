@@ -44,7 +44,6 @@
 					</view>
 					<view class="value">
 						<u-input v-model="SicknessName" :type="type" input-align="right" :border="border" :height="height" placeholder="请输入诊断名" :auto-height="autoHeight" />
-						<!-- <text>霍乱</text> -->
 					</view>
 				</view>
 				<view class="form_item add_drugs_form">
@@ -52,7 +51,7 @@
 						<text class="label_required_icon">*</text>
 						<text class="label_txt">所需药品</text>
 					</view>
-					<view class="value" @tap="drugsPickerShow = true">
+					<view class="value" @tap="chooseDrug">
 						<text class="value_txt">添加药品</text>
 						<u-icon name="arrow-right" color="#999" size="30"></u-icon>
 					</view>
@@ -69,21 +68,12 @@
 				</view>
 			</view>
 			
-			<!-- 药品列选择器 -->
-			<u-select 
-				v-model="drugsPickerShow" 
-				:list="allDrugsList" 
-				@confirm="handlePickerConfirm"
-			></u-select>
-			
-			<!-- 病情部分 -->
 			<view class="condition_item">
 				<ConditionTitle 
 					title="病情描述" 
 					:required="true"
 				></ConditionTitle>
 				<view class="condition_content">
-					<!-- <u-input v-model="SicknessCondition" :type="textarea" :height="100" placeholder="请输入病情" /> -->
 					<u-form ref="uForm">
 						<u-form-item ><u-input v-model="SicknessCondition" /></u-form-item>
 						</u-form>
@@ -118,14 +108,12 @@
 					</view>
 				</view>
 			</view>
-			<!-- 提交按钮部分 -->
 			<view class="btn">
 				<view class="submitBtn center" @click="SubmitAll">
 					提交
 				</view>
 			</view>
 			
-			<!-- 遮罩层 -->
 			<u-mask :show="maskShow" :custom-style="{background: 'rgba(0, 0, 0, 0.8)'}">
 				<view class="mask_warp" @tap.stop>
 					<view class="mask_head center">
@@ -170,24 +158,9 @@
 					avatarUrl: '../../static/center-selected.png',
 					deptName: '科室'
 				},
-				// drugsList: [],
 				hospitalsPickerShow: false,
 				chooseHospital: '',
 				allHospitalsList: [],
-				allDrugsList: [ //药品选择器中列表数据
-					{
-						label: '千斤藤',
-						value: '千斤藤'
-					},
-					{
-						label: '金线风',
-						value: '金线风'
-					},
-					{
-						label: '换骨筋',
-						value: '换骨筋'
-					},
-				],
 				drugsList: [], //选择后的列表
 				drugsPickerShow: false, //药品选择器显示
 				maskShow: false,//遮罩层显示
@@ -222,6 +195,14 @@
 				this.DoctorInfo = JSON.parse(DoctorInfo)
 				console.log(this.DoctorInfo)
 			})
+			this.$event.on('medicineEvent', (chooseDrugName) => {
+				var item={
+					label:chooseDrugName,
+					value:chooseDrugName
+				}
+				this.drugsList.push(item)
+				console.log("hhh"+this.drugsList)
+			})
 			uni.request({
 				url: `${this.$Url}/organization/page`, //这里的lid,page,pagesize只能是数字或字母?????
 				method: 'GET',
@@ -255,6 +236,13 @@
 					url: 'add'
 				});
 			},
+			
+			chooseDrug(){
+				uni.navigateTo({
+					url: '../apply/addmedicine'
+				});
+			},
+			
 			handlePickerConfirm(data) {
 				this.drugsList.push(data[0])
 			},
@@ -302,15 +290,12 @@
 					diagnosis:this.SicknessName,
 					drugIds:'',
 					drugNames:'',
-					personAge:this.userInfo.personAge,
-					personBirthDate:this.userInfo.personBirthDate,
-					personGenderName:this.userInfo.personGenderName,
+					personAge:this.UserInfo.personAge,
+					personBirthDate:this.UserInfo.personBirthDate,
+					personGenderName:this.UserInfo.personGenderName,
 					file:'',
 				}
-				console.log(this.UserInfo)
-				console.log(this.DoctorInfo)
-				console.log(this.SicknessCondition)
-				console.log(this.SicknessName)
+				console.log(submititem)
 			}
 		}
 	}

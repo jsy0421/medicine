@@ -33,6 +33,12 @@
 			}
 		},
 		{
+			"path": "pages/apply/addmedicine",
+			"style": {
+				"navigationBarTitleText": "uView-center"
+			}
+		},
+		{
 			"path": "pages/apply/doctor_main",
 			"style": {
 				"navigationBarTitleText": "uView-center"

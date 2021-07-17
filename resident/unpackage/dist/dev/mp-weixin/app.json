@@ -5,6 +5,7 @@
     "pages/apply/choosedoc",
     "pages/apply/apply",
     "pages/apply/add",
+    "pages/apply/addmedicine",
     "pages/apply/doctor_main",
     "pages/apply/add1",
     "pages/login/login"
@@ -36,5 +37,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }
