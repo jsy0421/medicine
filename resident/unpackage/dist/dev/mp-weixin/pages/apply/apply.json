@@ -3,6 +3,12 @@
   "usingComponents": {
     "u-icon": "/uview-ui/components/u-icon/u-icon",
     "u-select": "/uview-ui/components/u-select/u-select",
-    "head": "/pages/apply/components/head"
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-form": "/uview-ui/components/u-form/u-form",
+    "u-form-item": "/uview-ui/components/u-form-item/u-form-item",
+    "u-upload": "/uview-ui/components/u-upload/u-upload",
+    "u-mask": "/uview-ui/components/u-mask/u-mask",
+    "head": "/pages/apply/components/head",
+    "condition-title": "/pages/apply/components/conditiontitle"
   }
 }

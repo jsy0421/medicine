@@ -6,7 +6,7 @@ const Event=new event();
 Vue.prototype.$event=Event;
 
 Vue.config.productionTip = false
-Vue.prototype.$Url = "http://localhost:12000"
+Vue.prototype.$Url = "http://47.98.50.20:12000"
 
 App.mpType = 'app'
 

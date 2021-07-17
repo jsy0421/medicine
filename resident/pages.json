@@ -33,6 +33,18 @@
 			}
 		},
 		{
+			"path": "pages/apply/doctor_main",
+			"style": {
+				"navigationBarTitleText": "uView-center"
+			}
+		},
+		{
+			"path": "pages/apply/add1",
+			"style": {
+				"navigationBarTitleText": "uView-center"
+			}
+		},
+		{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "uView-center"

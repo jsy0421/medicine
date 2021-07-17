@@ -3,13 +3,49 @@
  * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
  * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
  */
-.wrap.data-v-2b5fc422 {
-  padding: 24rpx;
+.center.data-v-2b5fc422 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
-.u-row.data-v-2b5fc422 {
-  margin: 40rpx 0;
+.header_wrap.data-v-2b5fc422 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  padding: 30rpx 24rpx;
+  background-color: #fff;
 }
-.text.data-v-2b5fc422 {
-  text-align: center;
+.header_wrap .back_wrap.data-v-2b5fc422 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.header_wrap .center_wrap.data-v-2b5fc422 {
+  -webkit-box-flex: 8;
+  -webkit-flex: 8;
+          flex: 8;
+}
+.header_wrap .center_wrap .center_txt.data-v-2b5fc422 {
+  font-weight: 600;
+}
+.header_wrap .close_wrap.data-v-2b5fc422 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.header_wrap .close_wrap .close_txt.data-v-2b5fc422 {
+  color: #333;
 }
 

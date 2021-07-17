@@ -1,23 +1,25 @@
 <template>
 	<view class="content">
 		<view class="input">
-			<u-field v-model="userInfo.personName" label=" 姓名" label-width="150" placeholder="请填写姓名" required
-				icon="man-add">
-			</u-field>
-			<u-field v-model="userInfo.personCardId" label=" 身份证号" label-width="150" placeholder="请填写身份证号" required
-				icon="coupon">
-			</u-field>
-			<u-field @click="showAction" v-model="userInfo.personGenderName" :disabled="true" label=" 性别"
-				label-width="150" placeholder="请选择性别" right-icon="arrow-down-fill" required icon="man">
-			</u-field>
+			<u-form :model="userInfo" :rules="rules" ref="uForm" :errorType="errorType">
+				<u-form-item label="姓名" prop="personName" left-icon="man-add" required>
+					<u-input v-model="userInfo.personName" placeholder="请填写姓名" />
+				</u-form-item>
+				<u-form-item label=" 身份证号" prop="personCardId" required left-icon="coupon">
+					<u-input v-model="userInfo.personCardId" placeholder="请填写身份证号" />
+				</u-form-item>
+				<u-form-item label=" 性别" prop="personGenderName" right-icon="arrow-down-fill" required left-icon="man">
+					<u-input @click="showAction" v-model="userInfo.personGenderName" placeholder="请选择性别" />
+				</u-form-item>
+				<u-form-item label=" 出生日期" prop="personBirthDate" required right-icon="arrow-down-fill" left-icon="calendar">
+					<u-input @click="showCalendar" v-model="userInfo.personBirthDate" placeholder="请填写出生日期" />
+				</u-form-item>
+				<u-form-item label=" 手机号" prop="personPhoneNo" required left-icon="kefu-ermai">
+					<u-input v-model="userInfo.personPhoneNo" placeholder="请填写手机号" />
+				</u-form-item>
+			</u-form>
 			<u-action-sheet @click="clickItem" :list="sexList" v-model="showsex"></u-action-sheet>
 			<u-calendar v-model="showcalendar" @change="changeCalendar" :mode="mode"></u-calendar>
-			<u-field @click="showCalendar" v-model="userInfo.personBirthDate" :disabled="true" label=" 出生日期"
-				label-width="150" placeholder="请填写出生日期" required right-icon="arrow-down-fill" icon="calendar">
-			</u-field>
-			<u-field v-model="userInfo.personPhoneNo" label=" 手机号" label-width="150" placeholder="请填写手机号" required
-				icon="kefu-ermai">
-			</u-field>
 			<view class="btn_wrap">
 				<view class="submitBtn center" @click="submitInfo">
 					提交
@@ -32,6 +34,31 @@
 	export default {
 		data() {
 			return {
+				errorType: ['message'],
+				rules: {
+					personName: [{
+						message: '姓名不正确',
+						// 可以单个或者同时写两个触发验证方式
+						trigger: 'blur,change',
+						type: 'string'
+					}],
+					personCardId: [{
+						message: '身份证号格式不正确',
+						// 可以单个或者同时写两个触发验证方式
+						trigger: 'blur,change',
+						type: 'number',
+						min: 18,
+						max: 18,
+					}],
+					personPhoneNo: [{
+						message: '手机号格式不正确',
+						// 可以单个或者同时写两个触发验证方式
+						trigger: 'blur,change',
+						type: 'number',
+						min: 11,
+						max: 11,
+					}],
+				},
 				userInfo: {
 					personName: '',
 					personCardId: '',
@@ -39,6 +66,7 @@
 					personGenderName: '',
 					personBirthDate: '',
 					personAge: 0,
+					personGenderCode: 0,
 				},
 				sexList: [{
 						text: '男',
@@ -53,6 +81,9 @@
 			}
 		},
 		methods: {
+			onReady() {
+				this.$refs.uForm.setRules(this.rules);
+			},
 			showAction() {
 				this.showsex = true;
 			},
@@ -63,7 +94,7 @@
 				this.userInfo.personBirthDate = e.result
 				console.log(this.userInfo.personBirthDate)
 				//算年龄
-				this.userInfo.personAge=this.$options.methods.getAge(this.userInfo.personBirthDate)
+				this.userInfo.personAge = this.$options.methods.getAge(this.userInfo.personBirthDate)
 			},
 			// 根据日期计算年龄
 			getAge(strBirthday) {
@@ -108,20 +139,35 @@
 				this.showcalendar = true
 			},
 			submitInfo() {
-				if (this.userInfo.personBirthDate == '' || this.userInfo.personGenderName == '' || this.userInfo
-					.personName == '' || this.userInfo.personCardId == '' || this.userInfo.personPhoneNo == '') {
-					this.$refs.uTips.show({
-						title: '必填内容不能为空',
-						type: 'error',
-						duration: '2300'
-					})
-				} else {
-					var UserInfo = JSON.stringify(this.userInfo)
-					this.$event.notify('userEvent', UserInfo)
-					uni.navigateBack({
-						url: '../apply/apply'
-					});
-				}
+				this.$refs.uForm.validate(valid => {
+					if (valid) {
+						console.log('验证通过');
+						if (this.userInfo.personGenderName == "男")
+							this.userInfo.personGenderCode = 1
+						else this.userInfo.personGenderCode = 2
+						if (this.userInfo.personBirthDate == '' || this.userInfo.personGenderName == '' || this.userInfo
+							.personName == '' || this.userInfo.personCardId == '' || this.userInfo.personPhoneNo == '') {
+							this.$refs.uTips.show({
+								title: '必填内容不能为空',
+								type: 'error',
+								duration: '2300'
+							})
+						} else {
+							var UserInfo = JSON.stringify(this.userInfo)
+							this.$event.notify('userEvent', UserInfo)
+							uni.navigateBack({
+								url: '../apply/apply'
+							});
+						}
+					} else {
+						console.log('验证失败');
+						this.$refs.uTips.show({
+							title: '所填内容有误',
+							type: 'error',
+							duration: '2300'
+						})
+					}
+				});
 			},
 		}
 	}

@@ -96,10 +96,25 @@ var components
 try {
   components = {
     uIcon: function() {
-      return __webpack_require__.e(/*! import() | uview-ui/components/u-icon/u-icon */ "uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-icon/u-icon.vue */ 103))
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-icon/u-icon */ "uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-icon/u-icon.vue */ 111))
     },
     uSelect: function() {
-      return __webpack_require__.e(/*! import() | uview-ui/components/u-select/u-select */ "uview-ui/components/u-select/u-select").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-select/u-select.vue */ 110))
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-select/u-select */ "uview-ui/components/u-select/u-select").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-select/u-select.vue */ 118))
+    },
+    uInput: function() {
+      return Promise.all(/*! import() | uview-ui/components/u-input/u-input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-input/u-input")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-input/u-input.vue */ 125))
+    },
+    uForm: function() {
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-form/u-form */ "uview-ui/components/u-form/u-form").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-form/u-form.vue */ 133))
+    },
+    uFormItem: function() {
+      return Promise.all(/*! import() | uview-ui/components/u-form-item/u-form-item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-form-item/u-form-item")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-form-item/u-form-item.vue */ 140))
+    },
+    uUpload: function() {
+      return Promise.all(/*! import() | uview-ui/components/u-upload/u-upload */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-upload/u-upload")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-upload/u-upload.vue */ 150))
+    },
+    uMask: function() {
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-mask/u-mask */ "uview-ui/components/u-mask/u-mask").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-mask/u-mask.vue */ 157))
     }
   }
 } catch (e) {
@@ -123,6 +138,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.drugsPickerShow = true
+    }
+
+    _vm.e1 = function($event) {
+      _vm.maskShow = false
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -156,7 +180,110 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Head = function Head() {__webpack_require__.e(/*! require.ensure | pages/apply/components/head */ "pages/apply/components/head").then((function () {return resolve(__webpack_require__(/*! ./components/head.vue */ 117));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Head = function Head() {__webpack_require__.e(/*! require.ensure | pages/apply/components/head */ "pages/apply/components/head").then((function () {return resolve(__webpack_require__(/*! ./components/head.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ConditionTitle = function ConditionTitle() {__webpack_require__.e(/*! require.ensure | pages/apply/components/conditiontitle */ "pages/apply/components/conditiontitle").then((function () {return resolve(__webpack_require__(/*! ./components/conditiontitle.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -203,7 +330,7 @@ __webpack_require__.r(__webpack_exports__);
 
 {
   components: {
-    Head: Head },
+    Head: Head, ConditionTitle: ConditionTitle },
 
   data: function data() {
     return {
@@ -213,8 +340,11 @@ __webpack_require__.r(__webpack_exports__);
         personPhoneNo: '',
         personGenderName: '',
         personBirthDate: '',
-        personAge: 0 },
+        personAge: 0,
+        personGenderCode: 0 },
 
+      SicknessName: '',
+      SicknessCondition: '',
       DoctorInfo: {
         doctorId: '',
         doctorName: '姓名',
@@ -222,11 +352,48 @@ __webpack_require__.r(__webpack_exports__);
         avatarUrl: '../../static/center-selected.png',
         deptName: '科室' },
 
-      drugsList: [],
+      // drugsList: [],
       hospitalsPickerShow: false,
       chooseHospital: '',
-      allHospitalsList: [] };
+      allHospitalsList: [],
+      allDrugsList: [//药品选择器中列表数据
+      {
+        label: '千斤藤',
+        value: '千斤藤' },
 
+      {
+        label: '金线风',
+        value: '金线风' },
+
+      {
+        label: '换骨筋',
+        value: '换骨筋' }],
+
+
+      drugsList: [], //选择后的列表
+      drugsPickerShow: false, //药品选择器显示
+      maskShow: false, //遮罩层显示
+
+      action: "https://www.mocky.io/v2/5cc8019d300000980a055e76", //上传图片演示地址
+      fileList: [//上传图片列表
+        // {
+        // 	url: '',
+        // },
+      ],
+      imgList: [], //预览图片列表
+      prImgUrl: '', //预览图片地址
+      animationData: {},
+      degValue: 0 //旋转度数
+    };
+  },
+  onShow: function onShow() {
+    // 初始化一个动画
+    var animation = uni.createAnimation({
+      duration: 550,
+      timingFunction: 'ease',
+      transformOrigin: '50% 50% 0' });
+
+    this.animation = animation;
   },
   onLoad: function onLoad() {var _this = this;
     this.$event.on('userEvent', function (UserInfo) {
@@ -238,10 +405,10 @@ __webpack_require__.r(__webpack_exports__);
       console.log(_this.DoctorInfo);
     });
     uni.request({
-      url: "".concat(this.$Url, "/organization/get"), //这里的lid,page,pagesize只能是数字或字母?????
+      url: "".concat(this.$Url, "/organization/page"), //这里的lid,page,pagesize只能是数字或字母?????
       method: 'GET',
       success: function success(res) {
-        res.data.result.forEach(function (item) {
+        res.data.result.records.forEach(function (item) {
           var single = {
             label: item.organizationName,
             value: item.organizationId };
@@ -267,8 +434,65 @@ __webpack_require__.r(__webpack_exports__);
     },
     addInfo: function addInfo() {
       uni.navigateTo({
-        url: './add' });
+        url: 'add' });
 
+    },
+    handlePickerConfirm: function handlePickerConfirm(data) {
+      this.drugsList.push(data[0]);
+    },
+    //点击删除
+    deleteDrugItem: function deleteDrugItem(deIndex) {
+      this.drugsList = this.drugsList.filter(function (item, index) {
+        return index != deIndex;
+      });
+    },
+    //上传图片事件回调 成功或者失败都触发
+    handleUploadChange: function handleUploadChange() {
+      var upList = this.$refs.uUpload.lists;
+      this.imgList = upList.filter(function (item) {
+        return item.progress == 100 && item.error == false;
+      });
+    },
+    //点击预览大图片
+    handlePreviewImg: function handlePreviewImg(item, index) {
+      this.prImgUrl = item.url;
+      this.maskShow = true;
+    },
+    //图片旋转
+    handleRotate: function handleRotate() {
+      this.degValue = this.degValue + 90;
+      // 定义动画内容
+      this.animation.rotate(this.degValue).step();
+      // 导出动画数据传递给data层
+      this.animationData = this.animation.export();
+    },
+    //删除预览图片列表
+    deletePrImg: function deletePrImg(deIndex) {
+      this.imgList = this.imgList.filter(function (item, index) {
+        return deIndex != index;
+      });
+    },
+    SubmitAll: function SubmitAll() {
+      var submititem = {
+        createUserId: '',
+        doctorId: this.DoctorInfo.doctorId,
+        personCardId: this.UserInfo.personCardId,
+        personGenderCode: this.UserInfo.personGenderCode, //性别编号(1男,2女),
+        personPhoneNo: this.UserInfo.personPhoneNo,
+        personName: this.UserInfo.personName,
+        question: this.SicknessCondition,
+        diagnosis: this.SicknessName,
+        drugIds: '',
+        drugNames: '',
+        personAge: this.userInfo.personAge,
+        personBirthDate: this.userInfo.personBirthDate,
+        personGenderName: this.userInfo.personGenderName,
+        file: '' };
+
+      console.log(this.UserInfo);
+      console.log(this.DoctorInfo);
+      console.log(this.SicknessCondition);
+      console.log(this.SicknessName);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -1,0 +1,1 @@
+<view class="con_title"><view class="line"></view><view class="title_wrap"><block wx:if="{{required}}"><text class="required_icon">*</text></block><text class="title_txt">{{title}}</text></view></view>

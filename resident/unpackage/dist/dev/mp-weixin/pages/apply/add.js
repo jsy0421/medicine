@@ -95,17 +95,23 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
-    uField: function() {
-      return __webpack_require__.e(/*! import() | uview-ui/components/u-field/u-field */ "uview-ui/components/u-field/u-field").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-field/u-field.vue */ 131))
+    uForm: function() {
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-form/u-form */ "uview-ui/components/u-form/u-form").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-form/u-form.vue */ 133))
+    },
+    uFormItem: function() {
+      return Promise.all(/*! import() | uview-ui/components/u-form-item/u-form-item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-form-item/u-form-item")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-form-item/u-form-item.vue */ 140))
+    },
+    uInput: function() {
+      return Promise.all(/*! import() | uview-ui/components/u-input/u-input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-input/u-input")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-input/u-input.vue */ 125))
     },
     uActionSheet: function() {
-      return __webpack_require__.e(/*! import() | uview-ui/components/u-action-sheet/u-action-sheet */ "uview-ui/components/u-action-sheet/u-action-sheet").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-action-sheet/u-action-sheet.vue */ 138))
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-action-sheet/u-action-sheet */ "uview-ui/components/u-action-sheet/u-action-sheet").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-action-sheet/u-action-sheet.vue */ 178))
     },
     uCalendar: function() {
-      return __webpack_require__.e(/*! import() | uview-ui/components/u-calendar/u-calendar */ "uview-ui/components/u-calendar/u-calendar").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-calendar/u-calendar.vue */ 145))
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-calendar/u-calendar */ "uview-ui/components/u-calendar/u-calendar").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-calendar/u-calendar.vue */ 185))
     },
     uTopTips: function() {
-      return __webpack_require__.e(/*! import() | uview-ui/components/u-top-tips/u-top-tips */ "uview-ui/components/u-top-tips/u-top-tips").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-top-tips/u-top-tips.vue */ 152))
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-top-tips/u-top-tips */ "uview-ui/components/u-top-tips/u-top-tips").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-top-tips/u-top-tips.vue */ 192))
     }
   }
 } catch (e) {
@@ -192,17 +198,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
     return {
+      errorType: ['message'],
+      rules: {
+        personName: [{
+          message: '姓名不正确',
+          // 可以单个或者同时写两个触发验证方式
+          trigger: 'blur,change',
+          type: 'string' }],
+
+        personCardId: [{
+          message: '身份证号格式不正确',
+          // 可以单个或者同时写两个触发验证方式
+          trigger: 'blur,change',
+          type: 'number',
+          min: 18,
+          max: 18 }],
+
+        personPhoneNo: [{
+          message: '手机号格式不正确',
+          // 可以单个或者同时写两个触发验证方式
+          trigger: 'blur,change',
+          type: 'number',
+          min: 11,
+          max: 11 }] },
+
+
       userInfo: {
         personName: '',
         personCardId: '',
         personPhoneNo: '',
         personGenderName: '',
         personBirthDate: '',
-        personAge: 0 },
+        personAge: 0,
+        personGenderCode: 0 },
 
       sexList: [{
         text: '男' },
@@ -217,6 +251,9 @@ var _default =
 
   },
   methods: {
+    onReady: function onReady() {
+      this.$refs.uForm.setRules(this.rules);
+    },
     showAction: function showAction() {
       this.showsex = true;
     },
@@ -271,21 +308,36 @@ var _default =
     showCalendar: function showCalendar() {
       this.showcalendar = true;
     },
-    submitInfo: function submitInfo() {
-      if (this.userInfo.personBirthDate == '' || this.userInfo.personGenderName == '' || this.userInfo.
-      personName == '' || this.userInfo.personCardId == '' || this.userInfo.personPhoneNo == '') {
-        this.$refs.uTips.show({
-          title: '必填内容不能为空',
-          type: 'error',
-          duration: '2300' });
+    submitInfo: function submitInfo() {var _this = this;
+      this.$refs.uForm.validate(function (valid) {
+        if (valid) {
+          console.log('验证通过');
+          if (_this.userInfo.personGenderName == "男")
+          _this.userInfo.personGenderCode = 1;else
+          _this.userInfo.personGenderCode = 2;
+          if (_this.userInfo.personBirthDate == '' || _this.userInfo.personGenderName == '' || _this.userInfo.
+          personName == '' || _this.userInfo.personCardId == '' || _this.userInfo.personPhoneNo == '') {
+            _this.$refs.uTips.show({
+              title: '必填内容不能为空',
+              type: 'error',
+              duration: '2300' });
 
-      } else {
-        var UserInfo = JSON.stringify(this.userInfo);
-        this.$event.notify('userEvent', UserInfo);
-        uni.navigateBack({
-          url: '../apply/apply' });
+          } else {
+            var UserInfo = JSON.stringify(_this.userInfo);
+            _this.$event.notify('userEvent', UserInfo);
+            uni.navigateBack({
+              url: '../apply/apply' });
 
-      }
+          }
+        } else {
+          console.log('验证失败');
+          _this.$refs.uTips.show({
+            title: '所填内容有误',
+            type: 'error',
+            duration: '2300' });
+
+        }
+      });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
