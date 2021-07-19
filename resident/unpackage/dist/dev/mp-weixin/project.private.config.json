@@ -23,6 +23,12 @@
           "pathName": "pages/index/index",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/doctor/doctor",
+          "pathName": "pages/doctor/doctor",
+          "query": "",
+          "scene": null
         }
       ]
     }

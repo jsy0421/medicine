@@ -1,0 +1,1 @@
+<view class="con_title"><view class="title_wrap"><text class="title_txt">{{title}}</text></view></view>

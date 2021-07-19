@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "uView-center",
+  "usingComponents": {
+    "u-select": "/uview-ui/components/u-select/u-select",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "condition-title": "/pages/doctor/components/conditiontitle"
+  }
+}
