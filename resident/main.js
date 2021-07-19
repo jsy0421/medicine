@@ -1,12 +1,27 @@
 import Vue from 'vue'
 import App from './App'
 import event from './custom-event.js'
+// import GoEasy from 'js_sdk/goeasy-js/goeasy-1.2.1.js';
 
-const Event=new event();
-Vue.prototype.$event=Event;
+const Event = new event();
+Vue.prototype.$event = Event;
 
 Vue.config.productionTip = false
 Vue.prototype.$Url = "http://47.98.50.20:12000"
+
+// Vue.prototype.$goEasy = new GoEasy({
+// 	host: "hangzhou.goeasy.io",
+// 	appkey: "my_appkey", //替换为您的应用appkey
+// 	onConnected: function() {
+// 		console.log('连接成功！')
+// 	},
+// 	onDisconnected: function() {
+// 		console.log('连接断开！')
+// 	},
+// 	onConnectFailed: function(error) {
+// 		console.log('连接失败或错误！')
+// 	}
+// });
 
 App.mpType = 'app'
 
@@ -15,6 +30,6 @@ import uView from 'uview-ui'
 Vue.use(uView);
 
 const app = new Vue({
-    ...App
+	...App
 })
 app.$mount()

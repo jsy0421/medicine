@@ -6,54 +6,54 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uView-index"
+				"navigationBarTitleText": "主页"
 			}
 		}, {
 			"path": "pages/record/record",
 			"style": {
-				"navigationBarTitleText": "uView-center"
+				"navigationBarTitleText": "配药记录"
 			}
 		},
 		{
 			"path": "pages/apply/choosedoc",
 			"style": {
-				"navigationBarTitleText": "uView-center"
+				"navigationBarTitleText": "选择医生"
 			}
 		},
 		{
 			"path": "pages/apply/apply",
 			"style": {
-				"navigationBarTitleText": "uView-center"
+				"navigationBarTitleText": "申请配药"
 			}
 		},
 		{
 			"path": "pages/apply/add",
 			"style": {
-				"navigationBarTitleText": "uView-center"
+				"navigationBarTitleText": "问诊人"
 			}
 		},
 		{
 			"path": "pages/apply/addmedicine",
 			"style": {
-				"navigationBarTitleText": "uView-center"
-			}
-		},
-		{
-			"path": "pages/apply/doctor_main",
-			"style": {
-				"navigationBarTitleText": "uView-center"
+				"navigationBarTitleText": "添加药品"
 			}
 		},
 		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "uView-center"
+				"navigationBarTitleText": "用户登录"
 			}
 		},
 		{
 			"path": "pages/doctor/doctor",
 			"style": {
-				"navigationBarTitleText": "uView-center"
+				"navigationBarTitleText": "选择医生"
+			}
+		},
+		{
+			"path": "pages/record/prescription",
+			"style": {
+				"navigationBarTitleText": "处方记录"
 			}
 		}
 	],

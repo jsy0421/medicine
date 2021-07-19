@@ -29,6 +29,12 @@
           "pathName": "pages/doctor/doctor",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/prescription/prescription",
+          "pathName": "pages/prescription/prescription",
+          "query": "",
+          "scene": null
         }
       ]
     }

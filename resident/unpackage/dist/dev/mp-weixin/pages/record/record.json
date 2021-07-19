@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "uView-center",
+  "navigationBarTitleText": "配药记录",
   "usingComponents": {
     "single": "/pages/record/components/single"
   }

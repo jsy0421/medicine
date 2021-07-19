@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "uView-center",
+  "navigationBarTitleText": "选择医生",
   "usingComponents": {
     "u-modal": "/uview-ui/components/u-modal/u-modal"
   }

@@ -6,9 +6,9 @@
     "pages/apply/apply",
     "pages/apply/add",
     "pages/apply/addmedicine",
-    "pages/apply/doctor_main",
     "pages/login/login",
-    "pages/doctor/doctor"
+    "pages/doctor/doctor",
+    "pages/record/prescription"
   ],
   "subPackages": [],
   "window": {

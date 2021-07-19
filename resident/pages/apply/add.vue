@@ -39,7 +39,6 @@
 				rules: {
 					personName: [{
 						message: '姓名不正确',
-						// 可以单个或者同时写两个触发验证方式
 						trigger: 'blur,change',
 						type: 'string'
 					}],
@@ -82,6 +81,13 @@
 			}
 		},
 		methods: {
+			// showToast() {
+			// 				this.$refs.uToast.show({
+			// 					title: '登录成功',
+			// 					type: 'success',
+			// 					url: '../apply/apply'
+			// 				})
+			// 			},
 			onReady() {
 				this.$refs.uForm.setRules(this.rules);
 			},

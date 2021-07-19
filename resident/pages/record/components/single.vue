@@ -1,11 +1,11 @@
 <template>
 	<view class="content">
-		<u-card u-card :title="time" :sub-title="prescription_status" sub-title-color="#f49416" sub-title-size="27"
+		<u-card u-card :title="time" :sub-title="prescription_status" title-size="30" sub-title-color="#f49416" sub-title-size="27"
 			:foot-border-top="false">
 			<view class="" slot="body">
-				<view class="u-body-item u-flex u-border-bottom u-col-between u-p-t-0">
+				<view class="u-body-item u-flex  u-col-between u-p-t-0">
 					<u-image
-						src="https://img11.360buyimg.com/n7/jfs/t1/94448/29/2734/524808/5dd4cc16E990dfb6b/59c256f85a8c3757.jpg"
+						:src="imgUrl"
 						shape="circle" width="120rpx" height="120rpx"></u-image>
 					<view class="line">
 						<view class="doc-text" v-model="doctor_name">{{result_item.doctorName}} 在线云诊室</view>
@@ -28,6 +28,7 @@
 	export default {
 		data() {
 			return {
+				imgUrl:'',
 				time: '',//后端返回res之后加上问诊时间
 				prescription_status: '', //后端返回res之后判断赋值
 				isCompelete: false, //后端返回res之后判断赋值
@@ -42,18 +43,49 @@
 			}
 		},
 		mounted() {
-			this.time="问诊时间: "+this.result_item.createTime;
-			if(this.result_item.consultStatus==1){
+			this.imgUrl=this.result_item.photoIds.substr(0,this.result_item.photoIds.length-1)
+			console.log(this.imgUrl)
+			//时间格式
+			this.timeFormat(this.result_item.createTime)
+			this.time="问诊时间 : "+this.result_item.createTime;
+			console.log(this.time)
+			if(this.result_item.consultStatus==3){
 				this.prescription_status="已完成";
 				this.isCompelete=true
 			}
+			else if(this.result_item.consultStatus==2){
+				this.prescription_status="进行中";
+				this.isCompelete=false
+			}
 			else{
-				this.prescription_status="待完成";
+				this.prescription_status="待接诊";
 				this.isCompelete=false
 			}
 		},
 		methods: {
+			timeFormat(date){
+				var arr=date.split("T");
+				    var d=arr[0];
+				    var darr = d.split('-');
+				    var t=arr[1];
+				    var tarr = t.split('.000');
+				    var marr = tarr[0].split(':');
+				    var dd = darr[0]+"-"+darr[1]+"-"+darr[2]+" "+marr[0]+":"+marr[1];
+					this.result_item.createTime=dd
+					// console.log(this.result_item.createTime)
+			},
 			lookPrescription() {
+				// this.$event.notify('prescriptionEvent', this.drugitem.consultId)
+				
+				//移至prescription
+				// this.$event.on('prescriptionEvent', (consultId) => {
+				// 	this.consultId = consultId
+				// 	console.log(this.consultId)
+				// })
+				
+				uni.navigateTo({
+					url: '/pages/record/prescription',
+				});
 				console.log(this.result_item)
 			}
 		}

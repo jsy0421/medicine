@@ -1,7 +1,7 @@
 <template>
 	<view class="header_wrap">
 		<view class="back_wrap center">
-			<u-icon name="arrow-leftward" color="#222" size="34"></u-icon>
+			<u-icon @click="back" name="arrow-leftward" color="#222" size="34"></u-icon>
 		</view>
 		<view class="center_wrap center">
 			<text class="center_txt">复诊配方详情</text>
@@ -13,6 +13,15 @@
 </template>
 
 <script>
+	export default {
+	methods:{
+		back(){
+			uni.navigateBack({
+				url: '../index/index'
+			});
+		}
+	},
+	}
 </script>
 
 <style scoped lang="scss">

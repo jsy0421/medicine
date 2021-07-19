@@ -1,7 +1,8 @@
 <template>
 	<view class="content">
 		<!-- 搜索 -->
-		<u-search placeholder="搜索药品" v-model="keyword" class="search" :show-action="true" action-text="搜索" @custom="searchDrug" @search="searchDrug"></u-search>
+		<u-search placeholder="搜索药品" v-model="keyword" class="search" :show-action="true" action-text="搜索"
+			@custom="searchDrug" @search="searchDrug"></u-search>
 		<!-- 搜索结果文字 -->
 		<view class="search-text">
 			<text>搜索结果({{medicineList.length}}条)</text>
@@ -9,7 +10,8 @@
 
 		<!-- 搜索结果 -->
 		<view v-for="(item,index) in medicineList" :key="index" class="search-detail">
-			<u-card @click="chooseThis(index)" :show-head="false" :showFoot="false" :border="false" :foot-border-top="false" padding="10rpx">
+			<u-card @click="chooseThis(index)" :show-head="false" :showFoot="false" :border="false"
+				:foot-border-top="false" padding="10rpx">
 				<view class="card-body" slot="body">
 					<view class="u-body-item u-flex u-row-between u-p-b-0">
 						<view class="u-body-item-title u-line-2">
@@ -22,7 +24,7 @@
 							</view>
 						</view>
 						<text>{{item.dose}}{{item.doseUnit}}</text>
-						
+
 					</view>
 				</view>
 			</u-card>
@@ -35,7 +37,11 @@
 	export default {
 		data() {
 			return {
-				chooseDrugName:'',
+				drugitem:{
+					chooseDrugName:'',
+					chooseDrugId:'',
+				},
+				chooseDrugName: '',
 				keyword: '',
 				medicineList: []
 			}
@@ -44,21 +50,24 @@
 			uni.request({
 				url: `${this.$Url}/drug/page`,
 				method: 'GET',
+				data:{
+					size:100
+				},
 				success: (res) => {
-					// console.log(res.data.result.records)
+					//console.log(res.data.result.records)
 					res.data.result.records.forEach(item => {
 						var single = {
-							drugId:item.drugId,
-							drugName:item.drugName,
-							tradeName:item.tradeName,
-							pinyinCode:item.pinyinCode,
-							specification:item.specification,
-							packUnit:item.packUnit,
-							price:item.price,
-							dose:item.dose,
-							doseUnit:item.doseUnit,
-							factoryName:item.factoryName,
-							approvalNumber:item.approvalNumber
+							drugId: item.drugId,
+							drugName: item.drugName,
+							tradeName: item.tradeName,
+							pinyinCode: item.pinyinCode,
+							specification: item.specification,
+							packUnit: item.packUnit,
+							price: item.price,
+							dose: item.dose,
+							doseUnit: item.doseUnit,
+							factoryName: item.factoryName,
+							approvalNumber: item.approvalNumber
 						}
 						this.medicineList.push(single)
 					})
@@ -69,40 +78,45 @@
 			})
 		},
 		methods: {
-			searchDrug(){
+			searchDrug() {
+				if (this.keyword == ''||this.keyword == ' ')
+					this.keyword = "-1"
 				console.log(this.keyword)
-					uni.request({
+				uni.request({
 					url: `${this.$Url}/drug/search/${this.keyword}`, //这里的lid,page,pagesize只能是数字或字母?????
 					method: 'GET',
 					success: (res) => {
+						this.keyword=''
 						console.log(res.data.result)
-						this.medicineList=[]
+						this.medicineList = []
 						res.data.result.forEach(item => {
 							var single = {
-								drugId:item.drugId,
-								drugName:item.drugName,
-								tradeName:item.tradeName,
-								pinyinCode:item.pinyinCode,
-								specification:item.specification,
-								packUnit:item.packUnit,
-								price:item.price,
-								dose:item.dose,
-								doseUnit:item.doseUnit,
-								factoryName:item.factoryName,
-								approvalNumber:item.approvalNumber
+								drugId: item.drugId,
+								drugName: item.drugName,
+								tradeName: item.tradeName,
+								pinyinCode: item.pinyinCode,
+								specification: item.specification,
+								packUnit: item.packUnit,
+								price: item.price,
+								dose: item.dose,
+								doseUnit: item.doseUnit,
+								factoryName: item.factoryName,
+								approvalNumber: item.approvalNumber
 							}
 							this.medicineList.push(single)
 						})
 					},
 					fail: (err) => {
+						this.keyword=''
 						console.log(err)
 					}
 				})
 			},
-			chooseThis(index){
-				this.chooseDrugName=this.medicineList[index].drugName
-				console.log(this.chooseDrugName)
-				this.$event.notify('medicineEvent',this.chooseDrugName)
+			chooseThis(index) {
+				this.drugitem.chooseDrugName = this.medicineList[index].drugName
+				this.drugitem.chooseDrugId = this.medicineList[index].drugId
+				console.log(this.drugitem)
+				this.$event.notify('medicineEvent', this.drugitem)
 				uni.navigateBack({
 					url: '../apply/apply'
 				});
@@ -112,9 +126,10 @@
 </script>
 
 <style lang="scss">
-	.content{
+	.content {
 		padding-top: 150rpx;
 	}
+
 	.search {
 		background-color: #ffffff;
 		height: 100rpx;
@@ -153,17 +168,17 @@
 		width: 100%;
 		z-index: 9999;
 	}
-	
-	.search-detail{
+
+	.search-detail {
 		border-bottom: 1rpx #e4e7ed solid;
 	}
-	
-	.card-body{
+
+	.card-body {
 		line-height: 60rpx;
 		color: #303133;
 	}
-	
-	.info-icon{
+
+	.info-icon {
 		padding-left: 10rpx;
 	}
 </style>

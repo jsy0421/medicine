@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<Single v-for="tem in recordData.result" :key="item.index" :result_item="item"></Single>
+		<Single v-for="item in recordData.result" :key="item.index" :result_item="item"></Single>
 	</view>
 </template>
 
@@ -13,7 +13,7 @@
 			},
 			data() {
 				return {
-					consultId:'1415851778022617090',
+					userId:'617',
 					recordData: {
 						result: []
 					},
@@ -21,11 +21,14 @@
 			},
 			onLoad() {
 				uni.request({
-					url: `${this.$Url}/consult/${this.consultId}`,
-					method: 'GET',
+					url: `${this.$Url}/consult/history`,
+					method: 'POST',
 					success: (res) => {
-						this.recordData.result=res.data.result
-						console.log(res.data.result)
+						this.recordData.result=res.data.result.records
+						console.log(res.data.result.records)
+					},
+					data: {
+						userId:this.userId
 					},
 					fail: (err) => {
 						console.log(err)

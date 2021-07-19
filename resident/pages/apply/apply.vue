@@ -4,7 +4,7 @@
 		<view class="doctor">
 			<view class="doc_info">
 				<view class="avatar" @click="changeDoctor">
-					<image src="../../static/center-selected.png" mode="aspectFill" class="avatar_img"></image>
+					<image :src="DoctorInfo.avatarUrl" mode="aspectFill" class="avatar_img"></image>
 				</view>
 				<view class="doc_name">
 					<view class="name_title">
@@ -38,95 +38,89 @@
 			</u-select>
 
 			<view class="form_item">
-					<view class="label">
-						<text class="label_required_icon">*</text>
-						<text class="label_txt">确诊诊断</text>
-					</view>
-					<view class="value">
-						<u-input v-model="SicknessName" :type="type" input-align="right" :border="border" :height="height" placeholder="请输入诊断名" :auto-height="autoHeight" />
-					</view>
+				<view class="label">
+					<text class="label_required_icon">*</text>
+					<text class="label_txt">确诊诊断</text>
 				</view>
-				<view class="form_item add_drugs_form">
-					<view class="label">
-						<text class="label_required_icon">*</text>
-						<text class="label_txt">所需药品</text>
-					</view>
-					<view class="value" @tap="chooseDrug">
-						<text class="value_txt">添加药品</text>
-						<u-icon name="arrow-right" color="#999" size="30"></u-icon>
-					</view>
-				</view>
-			
-				<view class="drugs_list">
-					<block v-for="(item,index) in drugsList" :key="index">
-						<view class="drugs_item">
-							<u-icon class="drug_close_icon" name="close-circle-fill" color="#f10" size="28"
-								@tap="deleteDrugItem(index)"></u-icon>
-							<text class="drugs_name">{{item.value}}</text>
-						</view>
-					</block>
+				<view class="value">
+					<u-input v-model="SicknessName" :type="type" input-align="right" :border="border" :height="height"
+						placeholder="请输入诊断名" :auto-height="autoHeight" />
 				</view>
 			</view>
-			
-			<view class="condition_item">
-				<ConditionTitle 
-					title="病情描述" 
-					:required="true"
-				></ConditionTitle>
-				<view class="condition_content">
-					<u-form ref="uForm">
-						<u-form-item ><u-input v-model="SicknessCondition" /></u-form-item>
-						</u-form>
+			<view class="form_item add_drugs_form">
+				<view class="label">
+					<text class="label_required_icon">*</text>
+					<text class="label_txt">所需药品</text>
+				</view>
+				<view class="value" @tap="chooseDrug">
+					<text class="value_txt">添加药品</text>
+					<u-icon name="arrow-right" color="#999" size="30"></u-icon>
 				</view>
 			</view>
-			
-			<view class="condition_item upload">
-				<ConditionTitle title="病情照片"></ConditionTitle>
-				<view class="condition_content">
-					<view class="pr_img_list">
-						<view 
-							class="pr_img_item" 
-							v-for="(item,index) in imgList" 
-							:key="index"
-							@tap="handlePreviewImg(item,index)"
-						>
-							<u-icon class="img_close_icon" name="close-circle-fill" color="#f10" size="38"
-								@tap.stop="deletePrImg(index)"></u-icon>
-							<image :src="item.url" mode="aspectFill" class="pr_img"></image>
-						</view>
-						<u-upload
-							:action="action" 
-							:show-upload-list="false"
-							:file-list="fileList"
-							max-count="3"
-							ref="uUpload"
-							@on-change="handleUploadChange"
-						></u-upload>
+
+			<view class="drugs_list">
+				<block v-for="(item,index) in drugsList" :key="index">
+					<view class="drugs_item">
+						<u-icon class="drug_close_icon" name="close-circle-fill" color="#f10" size="28"
+							@tap="deleteDrugItem(index)"></u-icon>
+						<text class="drugs_name">{{item.value}}</text>
 					</view>
-					<view class="upload_notice_txt">
-						请上传病情照片、化验单、检查资料、报告单、药品处方单，若为皮肤问题，建议对准患处拍照。照片仅自己和医师可见。
+				</block>
+			</view>
+		</view>
+
+		<view class="condition_item">
+			<ConditionTitle title="病情描述" :required="true"></ConditionTitle>
+			<view class="condition_content">
+				<u-form ref="uForm">
+					<u-form-item>
+						<u-input v-model="SicknessCondition" />
+					</u-form-item>
+				</u-form>
+			</view>
+		</view>
+
+		<view class="condition_item upload">
+			<ConditionTitle title="病情照片"></ConditionTitle>
+			<view class="condition_content">
+				<view class="pr_img_list">
+					<view class="pr_img_item" v-for="(item,index) in imgList" :key="index"
+						@tap="handlePreviewImg(item,index)">
+						<u-icon class="img_close_icon" name="close-circle-fill" color="#f10" size="38"
+							@tap.stop="deletePrImg(index)"></u-icon>
+						<image :src="item.url" mode="aspectFill" class="pr_img"></image>
 					</view>
+					<u-upload :action="action" :show-upload-list="false"
+						:file-list="fileList" max-count="3" ref="uUpload" 
+						 name="files"
+						 @on-change="handleUploadChange"></u-upload>
+				</view>
+				<view class="upload_notice_txt">
+					请上传病情照片、化验单、检查资料、报告单、药品处方单，若为皮肤问题，建议对准患处拍照。照片仅自己和医师可见。
 				</view>
 			</view>
-			<view class="btn">
-				<view class="submitBtn center" @click="SubmitAll">
-					提交
+		</view>
+		
+		<view class="btn">
+			<view class="submitBtn center" @click="SubmitAll">
+				提交
+			</view>
+		</view>
+
+		<u-mask :show="maskShow" :custom-style="{background: 'rgba(0, 0, 0, 0.8)'}">
+			<view class="mask_warp" @tap.stop>
+				<view class="mask_head center">
+					<u-icon class="mask_close_icon" name="close-circle" color="#efefef" size="54" @tap="maskShow=false">
+					</u-icon>
+				</view>
+				<view class="mask_content center" :animation="animationData">
+					<image :src="prImgUrl" mode="aspectFill" class="big_img"></image>
+				</view>
+				<view class="mask_foot center">
+					<u-icon class="rotate_icon" name="reload" color="#efefef" size="54" @tap="handleRotate"></u-icon>
 				</view>
 			</view>
-			
-			<u-mask :show="maskShow" :custom-style="{background: 'rgba(0, 0, 0, 0.8)'}">
-				<view class="mask_warp" @tap.stop>
-					<view class="mask_head center">
-						<u-icon class="mask_close_icon" name="close-circle" color="#efefef" size="54" @tap="maskShow=false"></u-icon>
-					</view>
-					<view class="mask_content center" :animation="animationData" >
-						<image :src="prImgUrl" mode="aspectFill" class="big_img"></image>
-					</view>
-					<view class="mask_foot center">
-						<u-icon class="rotate_icon" name="reload" color="#efefef" size="54" @tap="handleRotate"></u-icon>
-					</view>
-				</view>
-			</u-mask>
+		</u-mask>
 	</view>
 </template>
 
@@ -136,7 +130,8 @@
 
 	export default {
 		components: {
-			Head,ConditionTitle
+			Head,
+			ConditionTitle
 		},
 		data() {
 			return {
@@ -147,10 +142,10 @@
 					personGenderName: '',
 					personBirthDate: '',
 					personAge: 0,
-					personGenderCode:0,
+					personGenderCode: 0,
 				},
-				SicknessName:'',
-				SicknessCondition:'',
+				SicknessName: '',
+				SicknessCondition: '',
 				DoctorInfo: {
 					doctorId: '',
 					doctorName: '姓名',
@@ -162,26 +157,31 @@
 				chooseHospital: '',
 				allHospitalsList: [],
 				drugsList: [], //选择后的列表
+				drugsNameList: [], //选择后的列表
+				drugsIdList: [], //选择后的列表
+				drugString: '', //提交的药品名列表字符串
+				drugIdString: '',
 				drugsPickerShow: false, //药品选择器显示
-				maskShow: false,//遮罩层显示
-				
-				action: "https://www.mocky.io/v2/5cc8019d300000980a055e76", //上传图片演示地址
-				fileList: [//上传图片列表
+				maskShow: false, //遮罩层显示
+				// action: "qwhcfz3bt.hn-bkt.clouddn.com", //上传图片演示地址
+				action:"http://47.98.50.20:12000/upload",
+				fileList: [ //上传图片列表
 					// {
 					// 	url: '',
 					// },
 				],
-				imgList: [],//预览图片列表
-				prImgUrl: '',//预览图片地址
+				fileListString: '',
+				imgList: [], //预览图片列表
+				prImgUrl: '', //预览图片地址
 				animationData: {},
-				degValue: 0//旋转度数
+				degValue: 0 //旋转度数
 			}
 		},
 		onShow() {
 			// 初始化一个动画
 			var animation = uni.createAnimation({
-			  duration: 550,
-			  timingFunction: 'ease',
+				duration: 550,
+				timingFunction: 'ease',
 				transformOrigin: '50% 50% 0',
 			})
 			this.animation = animation
@@ -195,13 +195,21 @@
 				this.DoctorInfo = JSON.parse(DoctorInfo)
 				console.log(this.DoctorInfo)
 			})
-			this.$event.on('medicineEvent', (chooseDrugName) => {
-				var item={
-					label:chooseDrugName,
-					value:chooseDrugName
+			this.$event.on('medicineEvent', (drugitem) => {
+				var contain = false
+				this.drugsList.forEach(single => {
+					if (single.value == drugitem.chooseDrugName)
+						contain = true
+				})
+				if (contain == false) {
+					var item = {
+						label: drugitem.chooseDrugId,
+						value: drugitem.chooseDrugName
+					}
+					this.drugsList.push(item)
+					// this.drugsList.push(item)
+					// console.log("hhh"+this.drugsList)
 				}
-				this.drugsList.push(item)
-				console.log("hhh"+this.drugsList)
 			})
 			uni.request({
 				url: `${this.$Url}/organization/page`, //这里的lid,page,pagesize只能是数字或字母?????
@@ -236,34 +244,41 @@
 					url: 'add'
 				});
 			},
-			
-			chooseDrug(){
+
+			chooseDrug() {
 				uni.navigateTo({
 					url: '../apply/addmedicine'
 				});
 			},
-			
+
 			handlePickerConfirm(data) {
 				this.drugsList.push(data[0])
 			},
+			
 			//点击删除
 			deleteDrugItem(deIndex) {
 				this.drugsList = this.drugsList.filter((item, index) => {
 					return index != deIndex
 				})
 			},
+			
 			//上传图片事件回调 成功或者失败都触发
 			handleUploadChange() {
 				let upList = this.$refs.uUpload.lists
 				this.imgList = upList.filter(item => {
-					return item.progress==100 && item.error == false
+					console.log(item)
+					this.fileListString=item.response.result
+					console.log(this.fileListString)
+					return item.progress == 100 && item.error == false
 				})
 			},
+			
 			//点击预览大图片
-			handlePreviewImg(item,index) {
+			handlePreviewImg(item, index) {
 				this.prImgUrl = item.url
 				this.maskShow = true
 			},
+			
 			//图片旋转
 			handleRotate() {
 				this.degValue = this.degValue + 90
@@ -272,30 +287,80 @@
 				// 导出动画数据传递给data层
 				this.animationData = this.animation.export()
 			},
+			
 			//删除预览图片列表
 			deletePrImg(deIndex) {
-				this.imgList = this.imgList.filter((item,index) => {
+				this.imgList = this.imgList.filter((item, index) => {
 					return deIndex != index
 				})
 			},
-			SubmitAll(){
-				var submititem={
-					createUserId:'',
-					doctorId:this.DoctorInfo.doctorId,
-					personCardId:this.UserInfo.personCardId,
-					personGenderCode:this.UserInfo.personGenderCode,//性别编号(1男,2女),
-					personPhoneNo:this.UserInfo.personPhoneNo,
-					personName:this.UserInfo.personName,
-					question:this.SicknessCondition,
-					diagnosis:this.SicknessName,
-					drugIds:'',
-					drugNames:'',
-					personAge:this.UserInfo.personAge,
-					personBirthDate:this.UserInfo.personBirthDate,
-					personGenderName:this.UserInfo.personGenderName,
-					file:'',
+			SubmitAll() {
+				// console.log(this.drugsList)
+				// console.log(this.imgList)
+
+				this.imgList.forEach(item => {
+					var item = {
+						url: item.file.path
+					}
+					this.fileList.push(item)
+				})
+
+				// console.log(this.fileList)
+				this.drugsList.forEach(item => {
+					this.drugsIdList.push(item.label)
+					this.drugsNameList.push(item.value)
+				})
+
+				this.drugIdString = this.drugsIdList.join(",")
+				// console.log(this.drugIdString)
+
+				this.drugsNameString = this.drugsNameList.join(",")
+				// console.log(this.drugsNameString)
+
+				//文件url处
+				// var urlList = []
+				// this.fileList.forEach(item => {
+				// 	console.log(item.url)
+				// 	urlList.push(item.url)
+				// })
+				// console.log(urlList)
+				// this.fileListString = urlList.join(',')
+				// console.log(this.fileListString)
+
+				var submititem = {
+					createUserId: '617',
+					doctorId: this.DoctorInfo.doctorId,
+					personCardId: this.UserInfo.personCardId,
+					personGenderCode: this.UserInfo.personGenderCode, //性别编号(1男,2女),
+					personPhoneNo: this.UserInfo.personPhoneNo,
+					personName: this.UserInfo.personName,
+					question: this.SicknessCondition,
+					diagnosis: this.SicknessName,
+					drugIds: this.drugIdString,
+					drugNames: this.drugsNameString,
+					personAge: this.UserInfo.personAge,
+					personBirthDate: this.UserInfo.personBirthDate,
+					personGenderName: this.UserInfo.personGenderName,
+					photoIds: this.fileListString,//response.result
 				}
 				console.log(submititem)
+				uni.request({
+					url: `${this.$Url}/user/consult`,
+					method: 'POST',
+					header: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						console.log(res.data)
+						uni.navigateTo({
+							url: '/pages/record/record',
+						});
+					},
+					data: submititem, //
+					fail: (err) => {
+						console.log(err)
+					}
+				})
 			}
 		}
 	}
@@ -316,7 +381,7 @@
 			align-items: center;
 			background-color: #fff;
 
-			.doc_info{
+			.doc_info {
 				display: flex;
 				align-items: center;
 
@@ -390,7 +455,7 @@
 				padding: 28rpx 0;
 				// border-bottom: .5rpx solid #dedede;
 
-				.label{
+				.label {
 					color: #666;
 					font-size: 30rpx;
 
@@ -401,7 +466,7 @@
 					}
 				}
 
-				.value{
+				.value {
 					display: flex;
 					align-items: center;
 
@@ -416,7 +481,7 @@
 				}
 			}
 
-			.ye_block{
+			.ye_block {
 				border: .5rpx solid yellow;
 				width: 100%;
 				height: 70rpx;
@@ -427,7 +492,7 @@
 				border: 0;
 			}
 
-			.drugs_list{
+			.drugs_list {
 				display: flex;
 				flex-flow: row wrap;
 				padding: 30rpx 12rpx;
@@ -493,11 +558,11 @@
 			}
 		}
 
-		.upload{
+		.upload {
 			margin-bottom: 0;
 		}
 
-		.btn{
+		.btn {
 			padding: 0 24rpx 15rpx;
 			background-color: #fff;
 

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "uView-center",
+  "navigationBarTitleText": "添加药品",
   "usingComponents": {
     "u-search": "/uview-ui/components/u-search/u-search",
     "u-card": "/uview-ui/components/u-card/u-card",
