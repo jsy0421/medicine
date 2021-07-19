@@ -179,17 +179,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 var _WXBizDataCrypt = _interopRequireDefault(__webpack_require__(/*! @/WXBizDataCrypt.js */ 46));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -209,42 +198,12 @@ var _WXBizDataCrypt = _interopRequireDefault(__webpack_require__(/*! @/WXBizData
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { data: function data() {return { title: 'Hello', sessionKey: '', openId: '', nickName: '微信用户', avatarUrl: "../../static/center.png", userInfo: {}, canIUse: uni.canIUse('button.open-type.getUserInfo'), canIGetUserProfile: false, encryptedData: '', iv: '', unionId: '', phoneNumber: '' };}, onLoad: function onLoad() {var _this = this; //console.log(uni.getUserProfile);
-    if (uni.getUserProfile) {this.canIGetUserProfile = true;} //判断若是版本不支持新版则采用旧版登录方式
-    //查看是否授权
-    if (!this.canIGetUserProfile) {uni.getSetting({ success: function success(res) {if (res.authSetting['scope.userInfo']) {uni.getUserInfo({ provider: 'weixin', success: function success(res) {//console.log(res);
-                _this.userInfo = res.userInfo;
-                try {
-                  _this.login();
-                } catch (e) {}
-              },
-              fail: function fail(res) {} });
-
-          } else {
-            // 用户没有授权
-            console.log('用户还没有授权');
-          }
-        } });
-
-    }
-  },
-  methods: {
-    //登录授权
-    bindGetUserInfo: function bindGetUserInfo(e) {
-      var _this = this;
-      if (this.canIGetUserProfile) {
-        //新版登录方式
+var _default = { data: function data() {return { title: 'Hello', sessionKey: '', openId: '', nickName: '', avatarUrl: "../../static/center.png", userInfo: {}, encryptedData: '', iv: '', unionId: '', phoneNumber: '', isCanUse: uni.setStorageSync('isCanUse', true) //默认为true  记录当前用户是否是第一次授权使用的
+    };}, onLoad: function onLoad() {}, methods: { //登录授权
+    bindGetUserInfo: function bindGetUserInfo(e) {var _this = this;
+      //新版登录方式
+      var isCanUse = uni.getStorageSync('isCanUse');
+      if (isCanUse) {
         uni.getUserProfile({
           desc: '登录',
           success: function success(res) {
@@ -258,20 +217,6 @@ var _default = { data: function data() {return { title: 'Hello', sessionKey: '',
             console.log(res);
           } });
 
-      } else {
-        //旧版登录方式
-        if (e.detail.userInfo) {
-          //用户按了允许授权按钮
-          //console.log('手动');
-          //console.log(e.detail.userInfo);
-          _this.userInfo = e.detail.userInfo;
-          try {
-            _this.login();
-          } catch (e) {}
-        } else {
-          console.log('用户拒绝了授权');
-          //用户按了拒绝按钮
-        }
       }
     },
     //登录
@@ -284,13 +229,12 @@ var _default = { data: function data() {return { title: 'Hello', sessionKey: '',
           // console.log(res);
           if (res.code) {
             // let code = res.code;
-            // 需要调后端获取openId和sessionKey
             uni.request({
               url: 'https://api.weixin.qq.com/sns/jscode2session',
               method: 'GET',
               data: {
                 appid: 'wxc485e910d320a0b3', //你的小程序的APPID  
-                secret: '65df3a78b1ee0d2d46d6d4667d0a8407', //你的小程序的secret,  
+                secret: '****', //你的小程序的secret, //65df3a78b1ee0d2d46d6d4667d0a8407
                 js_code: res.code, //wx.login 登录成功后的code  
                 grant_type: 'authorization_code' },
 
@@ -304,7 +248,9 @@ var _default = { data: function data() {return { title: 'Hello', sessionKey: '',
                 console.log(_this.openId, _this.sessionKey);
               } });
 
-            _this.updateUserInfo();
+            _this.avatarUrl = _this.userInfo.avatarUrl;
+            _this.nickName = _this.userInfo.nickName;
+            // uni.setStorageSync('isCanUse', false);
             //置换成功调用登录方法_this.updateUserInfo();
           } else {
             uni.showToast({
@@ -319,26 +265,36 @@ var _default = { data: function data() {return { title: 'Hello', sessionKey: '',
     //向后台更新信息
     updateUserInfo: function updateUserInfo() {
       var _this = this;
+      console.log(_this.phoneNumber);
       var params = {
         mini_open_id: _this.openId,
         user_id: _this.userInfo.nickName,
-        user_type: "2",
+        user_type: "1",
         phone_no: _this.phoneNumber };
 
-      _this.avatarUrl = _this.userInfo.avatarUrl;
-      _this.nickName = _this.userInfo.nickName;
-      //console.log('登录');
+      console.log('登录');
       //...后台登录的接口
     },
     getPhoneNumber: function getPhoneNumber(e) {
       var _this = this;
+      console.log(uni.getStorageSync('isCanUse'));
       setTimeout(function () {
         _this.encryptedData = e.detail.encryptedData;
         _this.iv = e.detail.iv;
-        var pc = new _WXBizDataCrypt.default('wxc485e910d320a0b3', _this.sessionKey); //wxXXXXXXX为你的小程序APPID
+        var pc = new _WXBizDataCrypt.default('wxc485e910d320a0b3', _this.
+        sessionKey); //wxXXXXXXX为你的小程序APPID
         var data = pc.decryptData(_this.encryptedData, _this.iv);
         _this.phoneNumber = data.phoneNumber;
         console.log(data);
+        var isCanUse = uni.getStorageSync('isCanUse');
+        if (isCanUse) {
+          _this.updateUserInfo();
+          console.log("nickName: " + _this.nickName);
+          uni.navigateTo({
+            url: '/pages/index/index?userId=' + _this.nickName });
+
+        }
+        uni.setStorageSync('isCanUse', false);
       }, 4000);
       uni.showLoading({
         title: '登录中...',

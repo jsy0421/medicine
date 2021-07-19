@@ -6,21 +6,59 @@
 		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "uView-center"
+				"navigationBarTitleText": "登录"
 			}
-		}, {
+		},{
+			"path": "pages/watchgeneral/watchgeneral",
+			"style": {
+				"navigationBarTitleText": "复诊配药"
+			}
+		},{
+		    "path" : "pages/watchdetail/watchdetail",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "患者详情",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},{
+			"path": "pages/makeprescription/makeprescription",
+			"style": {
+				"navigationBarTitleText": "处方"
+			}
+		},{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uView-index"
+				"navigationBarTitleText": "主页"
+			}
+		},{
+		    "path" : "pages/setmedicine/setmedicine",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "设置药品",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},{
+		    "path" : "pages/addmedicine/addmedicine",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "新增药品",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},  {
+			"path": "pages/prescription/prescription",
+			"style": {
+				"navigationBarTitleText": "电子处方"
 			}
 		}
-
-	],
+    ],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uView",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#2979ff",
+		"backgroundColor": "#2979ff"
 	}
 	// ,
 	// "tabBar": {

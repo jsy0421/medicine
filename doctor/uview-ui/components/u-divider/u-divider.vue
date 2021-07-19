@@ -118,7 +118,7 @@ export default {
 }
 
 .u-divider-line {
-	border-bottom: 1px solid $u-border-color;
+	border-bottom: 5px solid $u-border-color;
 	transform: scale(1, 0.5);
 	transform-origin: center;
 	
