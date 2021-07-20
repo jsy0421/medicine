@@ -7,9 +7,10 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ 4);var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+/* WEBPACK VAR INJECTION */(function(uni, createApp) {__webpack_require__(/*! uni-pages */ 4);var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
 var _customEvent = _interopRequireDefault(__webpack_require__(/*! ./custom-event.js */ 11));
+var _goeasy = _interopRequireDefault(__webpack_require__(/*! ./js_sdk/goeasy-js/goeasy-1.2.1.js */ 12));
 
 
 
@@ -35,23 +36,32 @@ var _customEvent = _interopRequireDefault(__webpack_require__(/*! ./custom-event
 
 
 
-var _uviewUi = _interopRequireDefault(__webpack_require__(/*! uview-ui */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} // import GoEasy from 'js_sdk/goeasy-js/goeasy-1.2.1.js';
-var Event = new _customEvent.default();_vue.default.prototype.$event = Event;_vue.default.config.productionTip = false;_vue.default.prototype.$Url = "http://47.98.50.20:12000"; // Vue.prototype.$goEasy = new GoEasy({
-// 	host: "hangzhou.goeasy.io",
-// 	appkey: "my_appkey", //替换为您的应用appkey
-// 	onConnected: function() {
-// 		console.log('连接成功！')
-// 	},
-// 	onDisconnected: function() {
-// 		console.log('连接断开！')
-// 	},
-// 	onConnectFailed: function(error) {
-// 		console.log('连接失败或错误！')
-// 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _uviewUi = _interopRequireDefault(__webpack_require__(/*! uview-ui */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var Event = new _customEvent.default();_vue.default.prototype.$event = Event;_vue.default.config.productionTip = false;_vue.default.prototype.$Url = "http://47.98.50.20:12000";_vue.default.prototype.$goEasy = new _goeasy.default({ host: "hangzhou.goeasy.io", appkey: "BC-3d6301593ba74327a6db771036444519", //替换为您的应用appkey
+  onConnected: function onConnected() {console.log('连接成功！');}, onDisconnected: function onDisconnected() {console.log('连接断开！');}, onConnectFailed: function onConnectFailed(error) {console.log('连接失败或错误！');} });_vue.default.prototype.$goEasy.subscribe({ channel: "user", //替换为您自己的channel
+  onMessage: function onMessage(message) {uni.showToast({ title: message.content, duration: 2000 }); // alert("Channel:" + message.channel + " content:" + message.content);
+    console.log("receive");} }); // this.$goEasy.publish({
+//     channel: "my_channel", //替换为您自己的channel
+//     message: "Hello, GoEasy!" //替换为您想要发送的消息内容
 // });
 _App.default.mpType = 'app'; // 引入全局uView
 _vue.default.use(_uviewUi.default);var app = new _vue.default(_objectSpread({}, _App.default));createApp(app).$mount();
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createApp"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createApp"]))
 
 /***/ }),
 /* 1 */,

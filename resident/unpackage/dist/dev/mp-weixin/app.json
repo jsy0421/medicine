@@ -7,7 +7,6 @@
     "pages/apply/add",
     "pages/apply/addmedicine",
     "pages/login/login",
-    "pages/doctor/doctor",
     "pages/record/prescription"
   ],
   "subPackages": [],

@@ -45,12 +45,6 @@
 			}
 		},
 		{
-			"path": "pages/doctor/doctor",
-			"style": {
-				"navigationBarTitleText": "选择医生"
-			}
-		},
-		{
 			"path": "pages/record/prescription",
 			"style": {
 				"navigationBarTitleText": "处方记录"

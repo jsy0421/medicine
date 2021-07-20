@@ -43,7 +43,7 @@
 			}
 		},
 		mounted() {
-			this.imgUrl=this.result_item.photoIds.substr(0,this.result_item.photoIds.length-1)
+			this.imgUrl=this.result_item.avatarUrl
 			console.log(this.imgUrl)
 			//时间格式
 			this.timeFormat(this.result_item.createTime)

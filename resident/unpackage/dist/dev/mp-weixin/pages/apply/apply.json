@@ -8,6 +8,7 @@
     "u-form-item": "/uview-ui/components/u-form-item/u-form-item",
     "u-upload": "/uview-ui/components/u-upload/u-upload",
     "u-mask": "/uview-ui/components/u-mask/u-mask",
+    "u-top-tips": "/uview-ui/components/u-top-tips/u-top-tips",
     "head": "/pages/apply/components/head",
     "condition-title": "/pages/apply/components/conditiontitle"
   }

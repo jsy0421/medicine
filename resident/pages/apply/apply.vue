@@ -90,17 +90,15 @@
 							@tap.stop="deletePrImg(index)"></u-icon>
 						<image :src="item.url" mode="aspectFill" class="pr_img"></image>
 					</view>
-					<u-upload :action="action" :show-upload-list="false"
-						:file-list="fileList" max-count="3" ref="uUpload" 
-						 name="files"
-						 @on-change="handleUploadChange"></u-upload>
+					<u-upload :action="action" :show-upload-list="false" :file-list="fileList" max-count="3"
+						ref="uUpload" name="files" @on-change="handleUploadChange"></u-upload>
 				</view>
 				<view class="upload_notice_txt">
 					请上传病情照片、化验单、检查资料、报告单、药品处方单，若为皮肤问题，建议对准患处拍照。照片仅自己和医师可见。
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="btn">
 			<view class="submitBtn center" @click="SubmitAll">
 				提交
@@ -121,6 +119,7 @@
 				</view>
 			</view>
 		</u-mask>
+		<u-top-tips ref="uTips"></u-top-tips>
 	</view>
 </template>
 
@@ -164,7 +163,7 @@
 				drugsPickerShow: false, //药品选择器显示
 				maskShow: false, //遮罩层显示
 				// action: "qwhcfz3bt.hn-bkt.clouddn.com", //上传图片演示地址
-				action:"http://47.98.50.20:12000/upload",
+				action: "http://47.98.50.20:12000/upload",
 				fileList: [ //上传图片列表
 					// {
 					// 	url: '',
@@ -254,31 +253,31 @@
 			handlePickerConfirm(data) {
 				this.drugsList.push(data[0])
 			},
-			
+
 			//点击删除
 			deleteDrugItem(deIndex) {
 				this.drugsList = this.drugsList.filter((item, index) => {
 					return index != deIndex
 				})
 			},
-			
+
 			//上传图片事件回调 成功或者失败都触发
 			handleUploadChange() {
 				let upList = this.$refs.uUpload.lists
 				this.imgList = upList.filter(item => {
 					console.log(item)
-					this.fileListString=item.response.result
+					this.fileListString = item.response.result
 					console.log(this.fileListString)
 					return item.progress == 100 && item.error == false
 				})
 			},
-			
+
 			//点击预览大图片
 			handlePreviewImg(item, index) {
 				this.prImgUrl = item.url
 				this.maskShow = true
 			},
-			
+
 			//图片旋转
 			handleRotate() {
 				this.degValue = this.degValue + 90
@@ -287,7 +286,7 @@
 				// 导出动画数据传递给data层
 				this.animationData = this.animation.export()
 			},
-			
+
 			//删除预览图片列表
 			deletePrImg(deIndex) {
 				this.imgList = this.imgList.filter((item, index) => {
@@ -341,8 +340,9 @@
 					personAge: this.UserInfo.personAge,
 					personBirthDate: this.UserInfo.personBirthDate,
 					personGenderName: this.UserInfo.personGenderName,
-					photoIds: this.fileListString,//response.result
+					photoIds: this.fileListString, //response.result
 				}
+
 				console.log(submititem)
 				uni.request({
 					url: `${this.$Url}/user/consult`,
@@ -352,9 +352,18 @@
 					},
 					success: (res) => {
 						console.log(res.data)
-						uni.navigateTo({
-							url: '/pages/record/record',
-						});
+						if (res.data.code == 100) {
+							this.$refs.uTips.show({
+								title: res.data.msg,
+								type: 'error',
+								duration: '2300'
+							})
+						} else {
+							//提交成功
+							uni.navigateTo({
+								url: '/pages/record/record',
+							});
+						}
 					},
 					data: submititem, //
 					fail: (err) => {
