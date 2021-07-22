@@ -6,7 +6,8 @@
 			<view class="page-login">
 				<view class="login-box">
 					<view v-if="isCanUse === true">
-						<button class='login-btn' type='primary' @click="bindGetUserInfo">
+						<button class='login-btn' type='primary' @click="bindGetUserInfo" open-type="getPhoneNumber"
+							@getphonenumber="getPhoneNumber">
 							<image src="../../static/微信.png" class="weixin" style="vertical-align:middle"></image><text
 								class="weixinText">微信快捷登录</text>
 						</button>
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-	// import WXBizDataCrypt from "@/WXBizDataCrypt.js";
+	import WXBizDataCrypt from "@/WXBizDataCrypt.js";
 	export default {
 		data() {
 			return {
@@ -43,7 +44,7 @@
 				encryptedData: '',
 				iv: '',
 				unionId: '',
-				// phoneNumber: '',
+				phoneNumber: '',
 				isCanUse: '' //默认为true  记录当前用户是否是第一次授权使用的
 			}
 		},
@@ -105,8 +106,8 @@
 								url: 'https://api.weixin.qq.com/sns/jscode2session',
 								method: 'GET',
 								data: {
-									appid: 'wxf3c572b5e01fad13', //你的小程序的APPID  
-									secret: '8f05dc5c15845e8f207380c8a813ed45', //你的小程序的secret, //65df3a78b1ee0d2d46d6d4667d0a8407
+									appid: 'wxe6c1d72bd254ca70', //你的小程序的APPID  
+									secret: '5ef7c97d44ad3f783667c783864e634b', //你的小程序的secret, //65df3a78b1ee0d2d46d6d4667d0a8407
 									js_code: res.code, //wx.login 登录成功后的code  
 									grant_type: 'authorization_code',
 								},
@@ -123,7 +124,6 @@
 							_this.avatarUrl = _this.userInfo.avatarUrl;
 							_this.nickName = _this.userInfo.nickName;
 							getApp().globalData.nickname = _this.nickName
-							_this.updateUserInfo();
 							// uni.setStorageSync('isCanUse', false);
 							//置换成功调用登录方法_this.updateUserInfo();
 						} else {
@@ -139,85 +139,74 @@
 			//向后台更新信息
 			updateUserInfo() {
 				let _this = this;
-				// console.log(_this.phoneNumber);
+				console.log(_this.phoneNumber);
 				console.log('登录');
 				//...后台登录的接口
 
 				console.log(_this.userInfo.nickName);
-				// console.log(_this.openId);
-				// console.log(_this.phoneNumber);
+				console.log(_this.openId);
+				console.log(_this.phoneNumber);
 
-				this.$refs.uToast.show({
-					title: '登录成功',
-					type: 'success'
-				});
-				uni.setStorageSync("userId", _this.nickName);
-				setTimeout(function() {
-					uni.navigateTo({
-						url: '/pages/index/index?userId=' + _this.nickName
-					})
-				}, 2000);
-
-				// uni.request({
-				// 	url: `${this.$Url}/doctor/login`, //这里的lid,page,pagesize只能是数字或字母
-				// 	method: 'POST',
-				// 	data: {
-				// 		userId: _this.userInfo.nickName,
-				// 		miniOpenId: _this.openId,
-				// 		phoneNo: _this.phoneNumber
-				// 	},
-				// 	success: (res) => {
-				// 		console.log(res.data);
-				// 		this.$refs.uToast.show({
-				// 			title: '登录成功',
-				// 			type: 'success'
-				// 		});
-				// 		uni.setStorageSync("userId", _this.nickName);
-				// 		setTimeout(function() {
-				// 			uni.navigateTo({
-				// 				url: '/pages/index/index?userId=' + _this.nickName
-				// 			})
-				// 		}, 2000);
-				// 	},
-				// 	fail: (err) => {
-				// 		console.log(err)
-				// 	}
-				// })
+				uni.request({
+					url: `${this.$Url}/doctor/login`, //这里的lid,page,pagesize只能是数字或字母
+					method: 'POST',
+					data: {
+						userId: _this.userInfo.nickName,
+						miniOpenId: _this.openId,
+						phoneNo: _this.phoneNumber
+					},
+					success: (res) => {
+						console.log(res.data);
+						this.$refs.uToast.show({
+							title: '登录成功',
+							type: 'success'
+						});
+						uni.setStorageSync("userId", _this.nickName);
+						setTimeout(function() {
+							uni.navigateTo({
+								url: '/pages/index/index?userId=' + _this.nickName
+							})
+						}, 2000);
+					},
+					fail: (err) => {
+						console.log(err)
+					}
+				})
 			},
-			// getPhoneNumber: function(e) {
-			// 	let _this = this;
-			// 	console.log(uni.getStorageSync('isCanUse'));
-			// 	setTimeout(function() {
-			// 		_this.encryptedData = e.detail.encryptedData;
-			// 		_this.iv = e.detail.iv;
-			// 		var pc = new WXBizDataCrypt('wxc485e910d320a0b3', _this
-			// 			.sessionKey); //wxXXXXXXX为你的小程序APPID
-			// 		var data = pc.decryptData(_this.encryptedData, _this.iv);
-			// 		_this.phoneNumber = data.phoneNumber;
-			// 		console.log(data);
-			// 		var isCanUse = uni.getStorageSync('isCanUse');
-			// 		if (isCanUse) {
-			// 			_this.updateUserInfo();
-			// 			console.log("nickName: " + _this.nickName);
-			// 		} else {
-			// 			this.$refs.uToast.show({
-			// 				title: '登录成功',
-			// 				type: 'success'
-			// 			});
-			// 			uni.setStorageSync("userId", _this.nickName);
-			// 			setTimeout(function() {
-			// 				uni.navigateTo({
-			// 					url: '/pages/index/index?userId=' + _this.nickName
-			// 				})
-			// 			}, 2000);
-			// 		}
-			// 		uni.setStorageSync('isCanUse', false);
-			// 	}, 4000);
-			// 	uni.showLoading({
-			// 		title: '登录中...',
-			// 		duration: 4000
-			// 	});
-			// },
+			getPhoneNumber: function(e) {
+				let _this = this;
+				console.log(uni.getStorageSync('isCanUse'));
+				setTimeout(function() {
+					_this.encryptedData = e.detail.encryptedData;
+					_this.iv = e.detail.iv;
+					var pc = new WXBizDataCrypt('wxe6c1d72bd254ca70', _this
+						.sessionKey); //wxXXXXXXX为你的小程序APPID
+					var data = pc.decryptData(_this.encryptedData, _this.iv);
+					_this.phoneNumber = data.phoneNumber;
+					console.log(data);
+					var isCanUse = uni.getStorageSync('isCanUse');
+					if (isCanUse) {
+						_this.updateUserInfo();
+						console.log("nickName: " + _this.nickName);
+					} else {
+						this.$refs.uToast.show({
+							title: '登录成功',
+							type: 'success'
+						});
+						uni.setStorageSync("userId", _this.nickName);
+						setTimeout(function() {
+							uni.navigateTo({
+								url: '/pages/index/index?userId=' + _this.nickName
+							})
+						}, 2000);
+					}
+					uni.setStorageSync('isCanUse', false);
+				}, 4000);
+				uni.showLoading({
+					title: '登录中...',
+					duration: 4000
+				});
+			},
 		}
 	}
 </script>
