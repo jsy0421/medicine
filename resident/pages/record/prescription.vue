@@ -2,9 +2,9 @@
 	<view class="content">
 		<!-- 分段器 -->
 		<view class="subsection">
-			<u-subsection :list="list" :current="curNow" @change="sectionChange" :animation="true"
-				active-color="#2979ff" inactiveColor="#c0c4cc" bg-color="#ffffff" height="100">
-			</u-subsection>
+			<u-tabs :list="list" :is-scroll="true" :current="curNow" @change="sectionChange" font-size="35"
+				:bar-width="width" height="100" :item-width="width"></u-tabs>
+
 		</view>
 		<!-- 处方 -->
 		<view class="prescription">
@@ -14,12 +14,13 @@
 					:full="true">
 					<view class="" slot="body">
 						<view class="u-body-item u-flex u-col-between u-p-t-0">
-							<view class="u-body-item-title u-line-2">{{org_id}}</view>
+							<view class="u-body-item-title u-line-2">{{prescriptionResult.prescribeList[curNow].orgId}}
+							</view>
 							<!--机构id-->
 						</view>
 						<view class="u-body-item u-flex u-row-between u-p-b-0 prescription_drug_id">
 							<view class="u-body-item-title u-line-2">处方笺</view>
-							<button disabled="true">{{prescription_drug_id}}</button>
+							<button>{{prescriptionResult.prescribeList[curNow].prescriptionType | prescriptionTypeFormat}}</button>
 							<!--处方药品标识-->
 						</view>
 					</view>
@@ -27,42 +28,43 @@
 			</view>
 			<!-- 处方 患者信息 -->
 			<view class="prescription-resident">
-				<p><text>姓名 {{person_name}}</text>
-					<text>性别 {{person_gender_name}}</text>
-					<text>年龄 {{person_age}}岁</text>
-					<text>日期 {{finish_time}}</text>
+				<p><text>姓名 {{prescriptionResult.personName}}</text>
+					<text>性别 {{prescriptionResult.personGenderName}}</text>
+					<text>年龄 {{prescriptionResult.personAge}}岁</text>
+					<text>日期 {{prescriptionResult.prescribeList[curNow].createTime | dataFormat}}</text> <!-- 接口缺 -->
 				</p>
-				<p><text>{{person_card_type}} {{person_card_id}}</text>
-					<text>手机号 {{person_phone_no}}</text>
+				<p><text>身份证号 {{prescriptionResult.personCardId}}</text>
+					<text>手机号 {{prescriptionResult.personPhoneNo}}</text>
 				</p>
 
 			</view>
 			<!-- 分割线 -->
-			<view class="divider">
-				<u-divider half-width="100%" margin-top="100" border-color="#303133" :useSlot="false"></u-divider>
-			</view>
+			<u-gap height="5" bg-color="#303133" margin-top='100'></u-gap>
 			<!-- 处方 药品信息 -->
 			<text class="RP">Rp</text>
-			<view class="prescription-medicine">
-				<table>
-					<tr>
-						<td>{{drug_name}}<text class="quantity">{{quantity}} 盒</text></td>
-					</tr>
-					<tr>
-						<td class="use">
-							用法：{{dose}}{{dose_unit}}/次&nbsp;&nbsp;&nbsp;{{frequency_name}}&nbsp;&nbsp;&nbsp;{{usage_name}}
-						</td>
-					</tr>
-					<tr>
-						<td class="price">药费：<text>￥{{price*quantity}}</text>元</td>
-					</tr>
-				</table>
+			<view v-for="(item,index) in prescriptionResult.prescribeList[curNow].drugList" :key="index">
+				<view class="prescription-medicine">
+					<table>
+						<tr>
+							<td>{{item.drugName}}<text class="quantity">{{item.quantity}} 盒</text></td>
+						</tr>
+						<tr>
+							<td class="use">
+								用法：{{item.dose}}{{item.doseUnit}}/次&nbsp;&nbsp;&nbsp;{{item.frequencyName}}&nbsp;&nbsp;&nbsp;{{item.usageName}}
+							</td>
+						</tr>
+
+					</table>
+
+				</view>
 			</view>
+			<text class="price">药费：<text>￥{{prescriptionResult.prescribeList[curNow].price}}</text>元</text>
 			<!-- 处方 医生信息 -->
 			<view class="prescription-doctor">
 				<table>
 					<tr>
-						<td>处方医师：{{doctor_name}} <text class="stamp">盖章：</text></td>
+						<td>处方医师：{{prescriptionResult.prescribeList[curNow].doctorName}} <text class="stamp">盖章：</text>
+						</td>
 					</tr>
 					<tr>
 						<td>审核医师：</td>
@@ -74,8 +76,12 @@
 			</view>
 			<!-- 处方 药师温馨提示 -->
 			<view class="prescription-warning">
-				<text>*药师温馨提示：{{remark}}</text>
+				<text>*药师温馨提示：{{prescriptionResult.prescribeList[curNow].remark}}</text>
 			</view>
+
+		</view>
+		<view class="button">
+			<button class="determine" @click="right()">确认</button>
 		</view>
 	</view>
 
@@ -86,94 +92,72 @@
 	export default {
 		data() {
 			return {
-				list: [{
-						name: '处方1'
-					},
-					{
-						name: '处方2'
-					}
-				],
+				list: [],
 				curNow: 0,
-				
-				result: {
-				    prescribeList: [
-				      {
-				        userId: "mkd",
-				        consultId: "1415851778022617090",
-				        orgId: "1",
-				        doctorId: "1",
-				        doctorName: "无语",
-				        prescriptionType: "1",
-				        drugList: [
-				          {
-				            drugId: 1,
-				            dose: 1,
-				            frequencyName: "bid",
-				            usageName: "口服",
-				            takeDays: 1,
-				            quantity: 1,
-				            remark: ""
-				          },
-				          {
-				            drugId: 2,
-				            dose: 1,
-				            frequencyName: "bid",
-				            usageName: "口服",
-				            takeDays: 10,
-				            quantity: 15,
-				            remark: "你好"
-				          }
-				        ]
-				      }
-				    ],
-				    personCardId: "330303200343431230",
-				    personGenderName: "男",
-				    personBirthDate: "2012-01-14T16:00:00.000+00:00",
-				    personAge: 12,
-				    personPhoneNo: "13656646985",
-				    personName: "李白"
-				  },
+				consultId: '',
 
-				// prescription_drug表
-				org_id: '创业慧康医院',
-				prescription_drug_id: '普通药品处方',
-				drug_name: '鼻炎颗粒',
-				quantity: '1.00',
-				dose: '1.00', //一次剂量
-				dose_unit: 'g', //剂量单位
-				frequency_name: 'bit', //用药频次
-				usage_name: '口服', //药品用法
-				price: '0.01', //单价
-				remark: '请遵医嘱服药！处方当日有效！', //药师温馨提示
-
-				// consult_ask表
-				person_name: '张三',
-				person_card_type: '身份证号',
-				person_card_id: '123456789654123654',
-				person_gender_name: '女',
-				person_age: '20',
-				person_phone_no: '12345678911',
-				finish_time: '2021-07-14',
-
-				//prescription_info表
-				doctor_name: '李四'
+				prescriptionResult: {},
+				width: 300
 			}
 		},
-		onLoad() {
-			// this.$event.on('doctorEvent', (DoctorInfo) => {
-			// 	this.DoctorInfo = JSON.parse(DoctorInfo)
-			// 	console.log(this.DoctorInfo)
-			// })
+		filters: {
+			dataFormat(time) {
+				var data = time.substring(0, 10);
+				return data;
+			},
+			prescriptionTypeFormat(prescriptionType) {
+				if (prescriptionType === '1')
+					return '西药方';
+				else if (prescriptionType === '2')
+					return '中成药方'
+			}
+		},
+		onLoad(option) {
+			console.log(option)
+			this.consultId = option.consultId;
+			uni.request({
+				url: `${this.$Url}/prescribe/${this.consultId}`, //这里的lid,page,pagesize只能是数字或字母
+				// url: `${this.$Url}/prescribe/1415851778022617090`,
+				method: 'GET',
+				success: (res) => {
+					console.log(res.data.result);
+					this.prescriptionResult = res.data.result;
+					for (var i = 0; i < this.prescriptionResult.prescribeList.length; i++) {
+						var number = i + 1;
+						var text = {
+							name: '处方' + number,
+						}
+						this.list.push(text);
+						var remark = '';
+						var price = 0;
+						for (var j = 0; j < this.prescriptionResult.prescribeList[i].drugList.length; j++) {
+							remark += this.prescriptionResult.prescribeList[i].drugList[j].remark;
+							price += this.prescriptionResult.prescribeList[i].drugList[j].price * this
+								.prescriptionResult.prescribeList[i].drugList[j].quantity;
+						}
+						this.prescriptionResult.prescribeList[i]["remark"] = remark;
+						this.prescriptionResult.prescribeList[i]["price"] = price;
+					}
+				},
+				fail: (err) => {
+					console.log(err)
+				}
+			});
 		},
 		methods: {
 			sectionChange(index) {
 				this.curNow = index;
+			},
+			right() {
+				uni.navigateBack({
+					url:'/page/record/record'
+				})
 			}
 		}
 	}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 	.u-card-wrap {
 		background-color: $u-bg-color;
 		padding: 1px;
@@ -188,17 +172,18 @@
 		align-items: center;
 	}
 
+
 	.u-body-item button {
 		font-size: 35rpx;
 		font-weight: 540;
 		color: #303133;
-		line-height: 50rpx;
 		background-color: #ffffff;
-		width: 180rpx;
+		width: 200rpx;
 		height: 110rpx;
 		border-radius: 8rpx;
-		margin-left: 15%;
 		border: 5rpx solid #303133;
+		vertical-align: middle;
+		text-align: center;
 	}
 
 	.prescription {
@@ -232,6 +217,7 @@
 	}
 
 	.prescription-medicine {
+		padding-top: 3%;
 		padding-left: 2%;
 		padding-right: 3%;
 		line-height: 50rpx;
@@ -251,14 +237,14 @@
 	}
 
 	.price {
-		padding-left: 65%;
+		padding-left: 60%;
 	}
 
 	.price text {
 		color: #f29100;
 	}
-	
-	.prescription-doctor{
+
+	.prescription-doctor {
 		padding-top: 10%;
 		line-height: 50rpx;
 		font-size: 30rpx;
@@ -266,11 +252,12 @@
 		color: #303133;
 		letter-spacing: 2rpx;
 	}
-	.stamp{
+
+	.stamp {
 		padding-left: 45%;
 	}
-	
-	.prescription-warning{
+
+	.prescription-warning {
 		padding-top: 5%;
 		display: flex;
 		justify-content: center;
@@ -280,5 +267,23 @@
 		font-weight: 500;
 		color: #c0c4cc;
 		letter-spacing: 2rpx;
+	}
+
+	.button {
+		position: fixed;
+		bottom: 0rpx;
+		width: 100%;
+		z-index: 9999;
+	}
+
+	.button button {
+		height: 100rpx;
+	}
+
+	.determine {
+		background-color: #2b85e4;
+		border-radius: 0;
+		color: #FFFFFF;
+		font-size: 32rpx;
 	}
 </style>

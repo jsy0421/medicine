@@ -24,21 +24,15 @@ Vue.prototype.$goEasy = new GoEasy({
 });
 
 Vue.prototype.$goEasy.subscribe({
-    channel: "user", //替换为您自己的channel
+    channel: "user_"+uni.getStorageSync("userId"), //替换为您自己的channel
     onMessage: function (message) {
 		uni.showToast({
 		    title: message.content,
 		    duration: 2000
 		});
-        // alert("Channel:" + message.channel + " content:" + message.content);
 		console.log("receive")
     }
 });
-
-// this.$goEasy.publish({
-//     channel: "my_channel", //替换为您自己的channel
-//     message: "Hello, GoEasy!" //替换为您想要发送的消息内容
-// });
 
 App.mpType = 'app'
 

@@ -3,7 +3,7 @@
  * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
  * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
  */
-.center.data-v-056f7a2f {
+.center {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -14,11 +14,11 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.u-card-wrap.data-v-056f7a2f {
+.u-card-wrap {
   background-color: #f3f4f6;
   padding: 1px;
 }
-.u-body-item.data-v-056f7a2f {
+.u-body-item {
   font-size: 45rpx;
   font-weight: 700;
   color: #333;
@@ -30,35 +30,35 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.u-body-item button.data-v-056f7a2f {
+.u-body-item button {
   font-size: 35rpx;
   font-weight: 540;
   color: #303133;
-  line-height: 50rpx;
   background-color: #ffffff;
-  width: 180rpx;
+  width: 200rpx;
   height: 110rpx;
   border-radius: 8rpx;
-  margin-left: 15%;
   border: 5rpx solid #303133;
+  vertical-align: middle;
+  text-align: center;
 }
-.prescription.data-v-056f7a2f {
+.prescription {
   padding-left: 3%;
   padding-right: 3%;
 }
-.prescription_drug_id.data-v-056f7a2f {
+.prescription_drug_id {
   margin-left: 40%;
 }
-.prescription-resident.data-v-056f7a2f {
+.prescription-resident {
   line-height: 80rpx;
   font-size: 26rpx;
   font-weight: 600;
   color: #303133;
 }
-.prescription-resident text.data-v-056f7a2f {
+.prescription-resident text {
   padding-right: 3%;
 }
-.RP.data-v-056f7a2f {
+.RP {
   padding-top: 5%;
   padding-left: 2%;
   font-size: 35rpx;
@@ -67,7 +67,8 @@
   display: block;
   margin-bottom: 3%;
 }
-.prescription-medicine.data-v-056f7a2f {
+.prescription-medicine {
+  padding-top: 3%;
   padding-left: 2%;
   padding-right: 3%;
   line-height: 50rpx;
@@ -76,20 +77,20 @@
   color: #303133;
   letter-spacing: 2rpx;
 }
-.quantity.data-v-056f7a2f {
+.quantity {
   float: inline-end;
 }
-.use.data-v-056f7a2f {
+.use {
   color: #606266;
   padding-left: 10rpx;
 }
-.price.data-v-056f7a2f {
-  padding-left: 65%;
+.price {
+  padding-left: 60%;
 }
-.price text.data-v-056f7a2f {
+.price text {
   color: #f29100;
 }
-.prescription-doctor.data-v-056f7a2f {
+.prescription-doctor {
   padding-top: 10%;
   line-height: 50rpx;
   font-size: 30rpx;
@@ -97,10 +98,10 @@
   color: #303133;
   letter-spacing: 2rpx;
 }
-.stamp.data-v-056f7a2f {
+.stamp {
   padding-left: 45%;
 }
-.prescription-warning.data-v-056f7a2f {
+.prescription-warning {
   padding-top: 5%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -116,5 +117,20 @@
   font-weight: 500;
   color: #c0c4cc;
   letter-spacing: 2rpx;
+}
+.button {
+  position: fixed;
+  bottom: 0rpx;
+  width: 100%;
+  z-index: 9999;
+}
+.button button {
+  height: 100rpx;
+}
+.determine {
+  background-color: #2b85e4;
+  border-radius: 0;
+  color: #FFFFFF;
+  font-size: 32rpx;
 }
 

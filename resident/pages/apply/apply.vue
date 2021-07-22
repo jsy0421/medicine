@@ -1,6 +1,8 @@
 <template>
 	<view class="apply_page">
+		<!-- 头部 -->
 		<Head></Head>
+		<!-- 医生信息 -->
 		<view class="doctor">
 			<view class="doc_info">
 				<view class="avatar" @click="changeDoctor">
@@ -14,12 +16,12 @@
 					<view class="sort" v-model="DoctorInfo.deptName">{{DoctorInfo.deptName}}</view>
 				</view>
 			</view>
-
 			<view class="change_doc" @click="changeDoctor">
 				<text class="change_doc_txt">更换医生</text>
 				<u-icon name="arrow-right" color="#999" size="30"></u-icon>
 			</view>
 		</view>
+
 
 		<view class="form">
 			<view class="form_item" @click="addInfo">
@@ -34,9 +36,11 @@
 				</view>
 			</view>
 
+
 			<u-select v-model="hospitalsPickerShow" :list="allHospitalsList" @confirm="handlePickerHospitalConfirm">
 			</u-select>
 
+			<!-- 确诊诊断 -->
 			<view class="form_item">
 				<view class="label">
 					<text class="label_required_icon">*</text>
@@ -120,6 +124,7 @@
 			</view>
 		</u-mask>
 		<u-top-tips ref="uTips"></u-top-tips>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -149,7 +154,7 @@
 					doctorId: '',
 					doctorName: '姓名',
 					levelName: '职位',
-					avatarUrl: '../../static/center-selected.png',
+					avatarUrl: '../../static/icon/医生头像.png',
 					deptName: '科室'
 				},
 				hospitalsPickerShow: false,
@@ -206,12 +211,14 @@
 						value: drugitem.chooseDrugName
 					}
 					this.drugsList.push(item)
+					this.drugsIdList.push(item.label)
+					this.drugsNameList.push(item.value)
 					// this.drugsList.push(item)
 					// console.log("hhh"+this.drugsList)
 				}
 			})
 			uni.request({
-				url: `${this.$Url}/organization/page`, //这里的lid,page,pagesize只能是数字或字母?????
+				url: `${this.$Url}/organization/page`,
 				method: 'GET',
 				success: (res) => {
 					res.data.result.records.forEach(item => {
@@ -294,8 +301,6 @@
 				})
 			},
 			SubmitAll() {
-				// console.log(this.drugsList)
-				// console.log(this.imgList)
 
 				this.imgList.forEach(item => {
 					var item = {
@@ -304,30 +309,13 @@
 					this.fileList.push(item)
 				})
 
-				// console.log(this.fileList)
-				this.drugsList.forEach(item => {
-					this.drugsIdList.push(item.label)
-					this.drugsNameList.push(item.value)
-				})
 
 				this.drugIdString = this.drugsIdList.join(",")
-				// console.log(this.drugIdString)
 
 				this.drugsNameString = this.drugsNameList.join(",")
-				// console.log(this.drugsNameString)
-
-				//文件url处
-				// var urlList = []
-				// this.fileList.forEach(item => {
-				// 	console.log(item.url)
-				// 	urlList.push(item.url)
-				// })
-				// console.log(urlList)
-				// this.fileListString = urlList.join(',')
-				// console.log(this.fileListString)
 
 				var submititem = {
-					createUserId: '617',
+					createUserId: getApp().globalData.nickname,
 					doctorId: this.DoctorInfo.doctorId,
 					personCardId: this.UserInfo.personCardId,
 					personGenderCode: this.UserInfo.personGenderCode, //性别编号(1男,2女),
@@ -360,12 +348,17 @@
 							})
 						} else {
 							//提交成功
-							uni.navigateTo({
-								url: '/pages/record/record',
-							});
+							this.$refs.uToast.show({
+								title: '提交成功',
+								type: 'success',
+								
+							})
+							uni.redirectTo({
+								url: '/pages/record/record'
+							})
 						}
 					},
-					data: submititem, //
+					data: submititem,
 					fail: (err) => {
 						console.log(err)
 					}

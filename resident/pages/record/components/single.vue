@@ -44,7 +44,7 @@
 		},
 		mounted() {
 			this.imgUrl=this.result_item.avatarUrl
-			console.log(this.imgUrl)
+			// console.log(this.imgUrl)
 			//时间格式
 			this.timeFormat(this.result_item.createTime)
 			this.time="问诊时间 : "+this.result_item.createTime;
@@ -72,21 +72,11 @@
 				    var marr = tarr[0].split(':');
 				    var dd = darr[0]+"-"+darr[1]+"-"+darr[2]+" "+marr[0]+":"+marr[1];
 					this.result_item.createTime=dd
-					// console.log(this.result_item.createTime)
 			},
 			lookPrescription() {
-				// this.$event.notify('prescriptionEvent', this.drugitem.consultId)
-				
-				//移至prescription
-				// this.$event.on('prescriptionEvent', (consultId) => {
-				// 	this.consultId = consultId
-				// 	console.log(this.consultId)
-				// })
-				
 				uni.navigateTo({
-					url: '/pages/record/prescription',
+					url: '/pages/record/prescription?consultId='+this.result_item.consultId,
 				});
-				console.log(this.result_item)
 			}
 		}
 	};

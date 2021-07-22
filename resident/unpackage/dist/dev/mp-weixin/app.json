@@ -1,20 +1,20 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/record/record",
     "pages/apply/choosedoc",
     "pages/apply/apply",
     "pages/apply/add",
     "pages/apply/addmedicine",
-    "pages/login/login",
     "pages/record/prescription"
   ],
   "subPackages": [],
   "window": {
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "white",
     "navigationBarTitleText": "uView",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarBackgroundColor": "#57c39d",
+    "backgroundColor": "#57c39d"
   },
   "usingComponents": {}
 }

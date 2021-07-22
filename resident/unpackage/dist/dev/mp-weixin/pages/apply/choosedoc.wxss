@@ -84,7 +84,7 @@
 .u-tab-item-active.data-v-262fda12::before {
   content: "";
   position: absolute;
-  border-left: 4px solid #2979ff;
+  border-left: 4px solid #57c39d;
   height: 32rpx;
   left: 0;
   top: 39rpx;

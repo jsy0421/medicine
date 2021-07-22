@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "用户登录",
-  "usingComponents": {}
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast"
+  }
 }

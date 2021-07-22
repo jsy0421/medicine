@@ -181,7 +181,7 @@
 	.u-tab-item-active::before {
 		content: "";
 		position: absolute;
-		border-left: 4px solid $u-type-primary;
+		border-left: 4px solid #57c39d;
 		height: 32rpx;
 		left: 0;
 		top: 39rpx;

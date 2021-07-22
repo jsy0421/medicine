@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "配药记录",
   "usingComponents": {
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
     "single": "/pages/record/components/single"
   }
 }
